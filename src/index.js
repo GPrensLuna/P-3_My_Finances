@@ -1,8 +1,19 @@
-import express from 'express'
 
-const App = express()
+import server from "./app.js";
+import './database.js'
+import { PORT, LOCALHOST } from "./config.js";
 
-App.get('/', (req, res) => res.send('holo'))
+const startServer = async () => {
+  try {
+    server.listen(PORT, LOCALHOST, () => {
 
-App.listen(3000)
-console.log("Server listening on port", 3000)
+      console.log(`Server is listening at http://${LOCALHOST}:${PORT} : `);
+
+      //console.log("https://printcraft3d.up.railway.app");
+    });
+  } catch (error) {
+    console.error(" Error starting the server:", error);
+  }
+};
+
+startServer();
