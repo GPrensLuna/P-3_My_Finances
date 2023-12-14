@@ -1,0 +1,1 @@
+export {InsectFrom} from './InsectFrom/InsectFrom.jsx'
