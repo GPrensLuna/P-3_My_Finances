@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { URL } from '../../config';
 
 export const InsectFrom = () => {
 
@@ -37,9 +38,38 @@ export const InsectFrom = () => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = {
+      concept,
+      description,
+      Type: selectedPaid,
+      value: parseFloat(value.replace(/[^\d.]/g, '')),
+    };
+
+    // Send the data to your server using fetch or any other method
+    fetch(`${URL}shopping`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        // Handle success, e.g., redirect or update UI
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // Handle error, e.g., show an error message
+      });
+  };
+
   return (
     <>
-      <form onSubmit={"handleSubmit"}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="concept">Concept:
           <select id="paid" value={concept} onChange={handleConceptChange}>
             <option value="">...</option>
