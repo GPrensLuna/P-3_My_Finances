@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { URL } from '../../config';
 
 export const InsectFrom = () => {
@@ -6,10 +6,44 @@ export const InsectFrom = () => {
   const opConcept = ["pago", "prestamo", "abono", "tranferencia", "retiro"];
   const opPaid = ["banco", "tarjeta bancolombia", "tarjeta tuya", "a mano", "efectivo"];
 
+  const [conceptData, setConceptData] = useState('');
+  const [typeData, setTypeData] = useState('');
   const [concept, setConcept] = useState('');
   const [description, setDescription] = useState('');
   const [selectedPaid, setSelectedPaid] = useState('');
   const [value, setValue] = useState('');
+
+
+  useEffect(() => {
+    fetch(`${URL}concept`,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        setConceptData(data);
+      })
+      .catch(error => {
+        console.error('Error al realizar la solicitud GET:', error);
+      });
+  }, []);
+  console.log('datos concept', conceptData)
+
+
+  useEffect(() => {
+    fetch(`${URL}type`)
+      .then(response => response.json())
+      .then(data => {
+        setTypeData(data);
+      })
+      .catch(error => {
+        console.error('Error al realizar la solicitud GET:', error);
+      });
+  }, []);
+
+  console.log('datos type', typeData)
 
   const handleConceptChange = (e) => {
     setConcept(e.target.value);
