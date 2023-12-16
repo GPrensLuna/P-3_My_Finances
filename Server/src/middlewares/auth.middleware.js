@@ -1,14 +1,15 @@
-import { urlencoded, json } from "express";
+import express from "express";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 
 const configureAuthMiddleware = (server) => {
   server.use(
-    urlencoded({ extended: true, limit: "50mb" }),
-    json({ limit: "50mb" })
+    express.urlencoded({ extended: true, limit: "50mb" }),
+    express.json({ limit: "50mb" })
   );
   server.use(cookieParser());
   server.use(morgan("dev"));
+  
   server.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Credentials", "true");
