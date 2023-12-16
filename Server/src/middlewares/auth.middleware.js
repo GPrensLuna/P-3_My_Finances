@@ -17,6 +17,9 @@ const configureAuthMiddleware = (server) => {
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization",
   }));
+
+  server.options("*", cors()); // Esto responde a todas las solicitudes OPTIONS
+
 }
 
 export default configureAuthMiddleware;
