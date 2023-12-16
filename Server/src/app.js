@@ -1,17 +1,16 @@
-import express from 'express';
-import cors from 'cors';
+import express, {json } from 'express';
 import Routers from './Routers/Router.js';
 
+import configureMiddleware from "./middlewares/auth.middleware.js";
+import errorMiddleware from "./middlewares/error.middleware.js";
 
 const server = express()
-const corsOptions = {
-  origin: 'http://localhost:5173/',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
-server.use(cors(corsOptions));
+
+configureMiddleware(server)
+
 server.use(express.json());
+
 server.use("/api", Routers);
+server.use(errorMiddleware);
 
 export default server;
