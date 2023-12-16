@@ -1,4 +1,4 @@
-import Concept from '../../models/Type.js';
+import Concept from '../../models/Concept.js';
 
 export const postConcept = async (req, res) => {
   let { concept } = req.body;
