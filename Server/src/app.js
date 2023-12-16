@@ -9,9 +9,6 @@ const server = express()
 configureMiddleware(server)
 
 server.use(json());
-router.get("/", (req, res) => {
-  return res.json("Init");
-});
 
 server.use("/api", Routers);
 server.use(errorMiddleware);
