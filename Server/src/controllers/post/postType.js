@@ -1,7 +1,7 @@
 import Type from '../../models/Type.js';
 
 
-export const postConcept = async (req, res) => {
+export const postType = async (req, res) => {
   let { type } = req.body;
 
   if (!type) {
