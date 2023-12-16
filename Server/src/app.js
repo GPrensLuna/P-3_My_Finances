@@ -1,4 +1,4 @@
-import express, {json } from 'express';
+import express from 'express';
 import Routers from './Routers/Router.js';
 
 import configureMiddleware from "./middlewares/auth.middleware.js";
