@@ -12,18 +12,12 @@ const configureAuthMiddleware = (server) => {
   server.use(morgan("dev"));
 
   server.use(cors({
-    origin: "http://localhost:5173/api/type",
+    origin: "http://localhost:5173/api",
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization",
   }));
-   server.use(cors({
-    origin: "http://localhost:3000/api/concept",
-    credentials: true,
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: "Origin,X-Requested-With,Content-Type,Accept,Authorization",
-  }));
-};
+
 
 export default configureAuthMiddleware;
 
