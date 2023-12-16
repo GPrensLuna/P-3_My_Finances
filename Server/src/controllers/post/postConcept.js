@@ -11,6 +11,7 @@ export const postConcept = async (req, res) => {
 
   try {
     const existingConcept = await Concept.findOne({name:concept});
+    
     if (existingConcept){
       return res.status(400).json({error: 'Concept already exists.'})
     }
