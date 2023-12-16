@@ -10,6 +10,11 @@ export const postConcept = async (req, res) => {
   concept = concept.toLowerCase();
 
   try {
+    const existingConcept = await Concept.findOne({name:concept});
+    if (existingConcept){
+      return res.status(400).json({error: 'Concept already exists.'})
+    }
+    
     const conceptObj = await Concept.findOneAndUpdate(
       { name: concept },
       { name: concept },
