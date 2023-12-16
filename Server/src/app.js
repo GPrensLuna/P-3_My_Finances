@@ -10,9 +10,8 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 204,
 };
-
+server.use(cors(corsOptions));
 server.use(express.json());
-
 server.use("/api", Routers);
 
 export default server;
