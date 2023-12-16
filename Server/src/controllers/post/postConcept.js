@@ -1,7 +1,13 @@
 import Concept from '../../models/Type.js';
 
 export const postConcept = async (req, res) => {
-  const { concept } = req.body;
+  let { concept } = req.body;
+
+  if (!concept) {
+    return res.status(400).json({ error: 'The concept field cannot be empty.' });
+  }
+
+  concept = concept.toLowerCase();
 
   try {
     const conceptObj = await Concept.findOneAndUpdate(
@@ -12,7 +18,7 @@ export const postConcept = async (req, res) => {
 
     res.json(conceptObj);
   } catch (error) {
-    console.error('Error al guardar en la base de datos:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    console.error('Error saving to the database:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
