@@ -8,7 +8,7 @@ const server = express()
 
 configureMiddleware(server)
 
-server.use(json());
+server.use(express.json());
 
 server.use("/api", Routers);
 server.use(errorMiddleware);
