@@ -4,7 +4,7 @@ import Type from '../../models/Type.js';
 
 export const postInsectShopping = async (req, res) => {
   const { concept, type, description, value } = req.body;
-
+console.log("req.body", req.body)
   if (!concept || !type || !description || !value) {
     return res.status(400).json({ error: 'All fields must be provided.' });
   }
@@ -19,12 +19,10 @@ export const postInsectShopping = async (req, res) => {
   try {
     const conceptObj = await Concept.findOneAndUpdate(
       { name: lowerCaseConcept },
-      { name: lowerCaseConcept },
       { upsert: true, new: true }
     );
 
     const typeObj = await Type.findOneAndUpdate(
-      { name: lowerCaseType },
       { name: lowerCaseType },
       { upsert: true, new: true }
     );
