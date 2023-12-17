@@ -19,18 +19,19 @@ export const postInsectShopping = async (req, res) => {
   try {
     const conceptObj = await Concept.findOneAndUpdate(
       { name: lowerCaseConcept },
+      { name: lowerCaseConcept },
       { upsert: true, new: true }
     );
 
     const typeObj = await Type.findOneAndUpdate(
       { name: lowerCaseType },
+      { name: lowerCaseType },
       { upsert: true, new: true }
     );
 
-    // Create a new Shopping entry
     const newShopping = new Shopping({
-      concept: conceptObj.name,
-      type: typeObj.name,
+      concept: lowerCaseConcept,
+      type: lowerCaseType,
       description,
       value,
     });

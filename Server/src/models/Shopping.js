@@ -2,12 +2,12 @@ import mongoose from 'mongoose';
 
 const shoppingSchema = new mongoose.Schema({
   concept: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.String,
     ref: 'Concept',
     required: true,
   },
   type: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.String,
     ref: 'Type',
     required: true,
   },
