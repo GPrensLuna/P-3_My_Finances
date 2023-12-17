@@ -4,7 +4,7 @@ import Type from '../../models/Type.js';
 
 export const postInsectShopping = async (req, res) => {
   const { concept, type, description, value } = req.body;
-console.log("req.body", req.body)
+
   if (!concept || !type || !description || !value) {
     return res.status(400).json({ error: 'All fields must be provided.' });
   }
@@ -27,6 +27,7 @@ console.log("req.body", req.body)
       { upsert: true, new: true }
     );
 
+    // Create a new Shopping entry
     const newShopping = new Shopping({
       concept: conceptObj.name,
       type: typeObj.name,
