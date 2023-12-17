@@ -3,7 +3,6 @@ import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals';
 
 const reportWebVitals = (onPerfEntry) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
-    // Importa las funciones de Web Vitals y pasa la devolución de llamada
     getCLS(onPerfEntry);
     getFID(onPerfEntry);
     getFCP(onPerfEntry);

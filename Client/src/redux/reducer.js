@@ -1,17 +1,25 @@
-import { ADD_PRODUCTS_INFO } from "./actions/actions_types.js";
 
-const initialState = {
+// const initialState = {
 
-};
+// };
 
-const rootReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case ADD_PRODUCTS_INFO:
-      return { ...state, allProducts: payload, filterProducts: payload };
+// const rootReducer = (state = initialState, { type }) => {
+//   switch (type) {
 
-    default:
-      return state;
-  }
-};
+
+//     default:
+//       return state;
+//   }
+// };
+
+// export default rootReducer;
+
+// reducers/index.js
+
+import { combineReducers } from 'redux';
+
+const rootReducer = combineReducers({
+  // Add other reducers here
+});
 
 export default rootReducer;

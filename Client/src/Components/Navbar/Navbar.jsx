@@ -1,4 +1,4 @@
-import { Link } from "react-scroll";
+import { NavBarLink } from "./NavBarLink/NavBarLink.jsx";
 import style from "./NavBar.module.css";
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
@@ -12,33 +12,19 @@ export const Navbar = () => {
     <div className={style.NavBarOp2}>
       <ul className={style.NavBarLu2}>
         <li className={style.NavBarLi2}>
-          <Link
-            className={style.Link}
-            spy={true}
-            smooth={true}
-            to="Home"
-            duration={500}
-            offset={-50}
-          >
+          <NavBarLink className={style.NavBarLink} to="Home">
             Home
-          </Link>
+          </NavBarLink>
         </li>
         <li className={style.NavBarLi2}>
-          <Link
-            className={style.Link}
-            spy={true}
-            smooth={true}
-            to={"Insect"}
-            duration={500}
-            offset={-50}
-          >
+          <NavBarLink className={style.NavBarLink} to="Insect">
             Insect Data
-          </Link>
+          </NavBarLink>
         </li>
         <li className={style.NavBarLi2}>
-          <Link className={style.Link} spy={true} smooth={true} to="Table">
+          <NavBarLink className={style.NavBarLink} to="Table">
             Table
-          </Link>
+          </NavBarLink>
         </li>
       </ul>
     </div>
@@ -47,29 +33,26 @@ export const Navbar = () => {
     <nav>
       <div className={style.NavBarContainer}>
         <div className={style.LogoContainer}>
-          <span className={style.Logo}>logo</span>
+          <NavBarLink className={style.NavBarLinkLogo} to="/">
+            <span className={style.Logo}>logo</span>
+          </NavBarLink>
         </div>
         <div className={style.NavBar}>
           <div className={style.NavBarOp}>
             <ul className={style.NavBarLu}>
               <li className={style.NavBarLi}>
-                <Link className={style.Link} spy={true} smooth={true} to="Home">
+                <NavBarLink className={style.NavBarLink} to="/">
                   Home
-                </Link>
+                </NavBarLink>
               </li>
               <li className={style.NavBarLi}>
-                <Link
-                  className={style.Link}
-                  spy={true}
-                  smooth={true}
-                  to="Insect"
-                >
+                <NavBarLink className={style.NavBarLink} to="Insect">
                   Insect Data
-                </Link>
+                </NavBarLink>
               </li>
               <li className={style.NavBarLi}>
-                <Link
-                  className={style.Link}
+                <NavBarLink
+                  className={style.NavBarLink}
                   spy={true}
                   smooth={true}
                   to="Table"
@@ -77,7 +60,7 @@ export const Navbar = () => {
                   offset={-50}
                 >
                   Table
-                </Link>
+                </NavBarLink>
               </li>
             </ul>
           </div>
