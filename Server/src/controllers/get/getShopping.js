@@ -11,7 +11,7 @@ export const getShopping = async (req, res) => {
         path: 'type',
         select: 'name',
       });
-
+  
     res.status(200).json(shoppingInfo);
   } catch (error) {
     console.error('Error fetching information:', error);
