@@ -12,17 +12,32 @@ export const Navbar = () => {
     <div className={style.NavBarOp2}>
       <ul className={style.NavBarLu2}>
         <li className={style.NavBarLi2}>
-          <NavBarLink className={style.NavBarLink} to="Home">
+          <NavBarLink
+            spy="true"
+            smooth="true"
+            className={style.NavBarLink}
+            to="/"
+          >
             Home
           </NavBarLink>
         </li>
         <li className={style.NavBarLi2}>
-          <NavBarLink className={style.NavBarLink} to="Insect">
+          <NavBarLink
+            spy="true"
+            smooth="true"
+            className={style.NavBarLink}
+            to="Insect"
+          >
             Insect Data
           </NavBarLink>
         </li>
         <li className={style.NavBarLi2}>
-          <NavBarLink className={style.NavBarLink} to="Table">
+          <NavBarLink
+            spy="true"
+            smooth="true"
+            className={style.NavBarLink}
+            to="Table"
+          >
             Table
           </NavBarLink>
         </li>
@@ -41,25 +56,35 @@ export const Navbar = () => {
           <div className={style.NavBarOp}>
             <ul className={style.NavBarLu}>
               <li className={style.NavBarLi}>
-                <NavBarLink className={style.NavBarLink} to="/">
+                <NavBarLink
+                  spy="true"
+                  smooth="true"
+                  className={style.NavBarLink}
+                  to="/"
+                >
                   Home
                 </NavBarLink>
               </li>
               <li className={style.NavBarLi}>
-                <NavBarLink className={style.NavBarLink} to="Insect">
+                <NavBarLink
+                  spy="true"
+                  smooth="true"
+                  className={style.NavBarLink}
+                  to="Insect"
+                >
                   Insect Data
                 </NavBarLink>
               </li>
               <li className={style.NavBarLi}>
                 <NavBarLink
                   className={style.NavBarLink}
-                  spy={true}
-                  smooth={true}
-                  to="Table"
+                  spy="true"
+                  smooth="true"
+                  to="dashboard"
                   duration={500}
                   offset={-50}
                 >
-                  Table
+                  Dashboard
                 </NavBarLink>
               </li>
             </ul>

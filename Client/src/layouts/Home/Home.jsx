@@ -1,9 +1,11 @@
-import { InsectFrom } from "../../Components";
+import * as Components from "../../Components";
 
 export const Home = () => {
   return (
     <>
-      <InsectFrom />
+      <Components.InsectFrom />
+      <Components.Reminder />
+      <Components.Dashboard />
     </>
   );
 };

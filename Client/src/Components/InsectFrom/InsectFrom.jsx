@@ -45,16 +45,8 @@ export const InsectFrom = () => {
 
   const handleValueChange = (e) => {
     const rawValue = e.target.value;
-    const numericValue = parseFloat(rawValue.replace(/[^\d.]/g, ""));
 
-    if (!isNaN(numericValue)) {
-      const formattedValue = numericValue.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      });
-
-      setValue(formattedValue);
-    }
+    setValue(rawValue);
   };
 
   const handleSubmit = (e) => {
@@ -63,8 +55,8 @@ export const InsectFrom = () => {
     const formData = {
       concept,
       description,
-      Type: selectedPaid,
-      value: parseFloat(value.replace(/[^\d.]/g, "")),
+      type: selectedPaid,
+      value,
     };
 
     // Send the data to your server using fetch or any other method
@@ -82,56 +74,105 @@ export const InsectFrom = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
+
+    setConcept("");
+    setDescription("");
+    setSelectedPaid("");
+    setValue("");
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="concept">
-          Concept:
-          <select id="concept" value={concept} onChange={handleConceptChange}>
-            <option value="">...</option>
-            {conceptData.map((opConcept) => (
-              <option key={opConcept._id} value={opConcept._id}>
-                {opConcept.name}
-              </option>
-            ))}
-          </select>
-        </label>
+      <form
+        className="mx-auto p-6 bg-white shadow-md rounded-md my-4 grid"
+        onSubmit={handleSubmit}
+        style={{ minWidth: "500px", maxWidth: "1250px" }}
+      >
+        <div className="col-span-5 md:grid md:grid-cols-5 md:gap-4">
+          <div className="mb-4 md:mb-0 md:col-span-5 lg:col-span-1 lg:w-300 xl:w-400">
+            <label
+              htmlFor="concept"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Concept:
+            </label>
+            <select
+              id="concept"
+              value={concept}
+              onChange={handleConceptChange}
+              className="p-2 border border-gray-300 rounded-md w-full"
+            >
+              <option value="">...</option>
+              {conceptData.map((opConcept) => (
+                <option key={opConcept._id} value={opConcept._id}>
+                  {opConcept.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <label htmlFor="description">
-          Description:{" "}
-          <input
-            type="text"
-            id="description"
-            value={description}
-            onChange={handleDescriptionChange}
-          />
-        </label>
+          <div className="mb-4 md:mb-0 md:col-span-5 lg:col-span-1 lg:w-300 xl:w-400">
+            <label
+              htmlFor="description"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Description:
+            </label>
+            <input
+              type="text"
+              id="description"
+              value={description}
+              onChange={handleDescriptionChange}
+              className="p-2 border border-gray-300 rounded-md w-full"
+            />
+          </div>
 
-        <label htmlFor="paid">
-          Paid with:
-          <select id="paid" value={selectedPaid} onChange={handleOptionChange}>
-            <option value="">...</option>
-            {typeData.map((opPaid) => (
-              <option key={opPaid._id} value={opPaid._id}>
-                {opPaid.name}
-              </option>
-            ))}
-          </select>
-        </label>
+          <div className="mb-4 md:mb-0 md:col-span-5 lg:col-span-1 lg:w-300 xl:w-400">
+            <label
+              htmlFor="paid"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Paid with:
+            </label>
+            <select
+              id="paid"
+              value={selectedPaid}
+              onChange={handleOptionChange}
+              className="p-2 border border-gray-300 rounded-md w-full"
+            >
+              <option value="">...</option>
+              {typeData.map((opPaid) => (
+                <option key={opPaid._id} value={opPaid._id}>
+                  {opPaid.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <label htmlFor="value">
-          Value:{" "}
-          <input
-            type="text"
-            id="value"
-            value={value}
-            onChange={handleValueChange}
-          />
-        </label>
-
-        <button type="submit">Save</button>
+          <div className="mb-4 md:mb-0 md:col-span-5 lg:col-span-1 lg:w-300 xl:w-400">
+            <label
+              htmlFor="value"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Value:
+            </label>
+            <input
+              type="text"
+              id="value"
+              value={value}
+              onChange={handleValueChange}
+              className="p-2 border border-gray-300 rounded-md w-full"
+            />
+          </div>
+          <div className="md:col-span-5 lg:col-span-1 lg:w-300 xl:w-400 flex items-center justify-center">
+            <button
+              type="submit"
+              className="w-full md:w-250 max-w-300 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700"
+            >
+              Save
+            </button>
+          </div>
+        </div>
       </form>
     </>
   );
