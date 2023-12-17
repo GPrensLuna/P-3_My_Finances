@@ -30,8 +30,8 @@ export const postInsectShopping = async (req, res) => {
     );
 
     const newShopping = new Shopping({
-      concept: lowerCaseConcept,
-      type: lowerCaseType,
+      concept: conceptObj._id,
+      type: typeObj._id,
       description,
       value,
     });
