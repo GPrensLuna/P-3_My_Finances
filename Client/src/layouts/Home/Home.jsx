@@ -1,10 +1,9 @@
-import { InsectFrom } from '../../Components/InsectFrom/InsectFrom.jsx';
+import { InsectFrom } from "../../Components";
 
 export const Home = () => {
-
   return (
     <>
-<InsectFrom/>
+      <InsectFrom />
     </>
-  )
-}
+  );
+};

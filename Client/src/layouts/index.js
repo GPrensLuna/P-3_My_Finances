@@ -1,1 +1,5 @@
-export {Home} from './Home/Home.jsx'
+import { Home } from './Home/Home.jsx';
+import { InsectData } from './InsectData/InsectData.jsx';
+
+export {Home, InsectData}
+
