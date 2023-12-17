@@ -69,16 +69,16 @@ export const InsectFrom = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
+        console.log("Request sever:", data);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
 
-    setConcept("");
-    setDescription("");
-    setSelectedPaid("");
-    setValue("");
+    // setConcept("");
+    // setDescription("");
+    // setSelectedPaid("");
+    // setValue("");
   };
 
   return (
@@ -104,7 +104,7 @@ export const InsectFrom = () => {
             >
               <option value="">...</option>
               {conceptData.map((opConcept) => (
-                <option key={opConcept._id} value={opConcept._id}>
+                <option key={opConcept._id} value={opConcept.name}>
                   {opConcept.name}
                 </option>
               ))}
@@ -142,7 +142,7 @@ export const InsectFrom = () => {
             >
               <option value="">...</option>
               {typeData.map((opPaid) => (
-                <option key={opPaid._id} value={opPaid._id}>
+                <option key={opPaid._id} value={opPaid.name}>
                   {opPaid.name}
                 </option>
               ))}
