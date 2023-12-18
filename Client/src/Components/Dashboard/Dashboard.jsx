@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { DataTable } from "./DataTable/DataTable.jsx";
 import { URL } from "../../config";
-// ... (previous code)
 
 export const Dashboard = () => {
   const [shoppingData, setShoppingData] = useState([]);
@@ -23,7 +22,9 @@ export const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetch(`${URL}shopping`)
+    fetch(`${URL}shopping`, {
+      method: "GET",
+    })
       .then((response) => response.json())
       .then((data) => {
         const formattedData = data.map(

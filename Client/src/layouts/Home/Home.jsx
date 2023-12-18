@@ -7,7 +7,7 @@ export const Home = () => {
         <Components.InsectFrom />
         <Components.Dashboard />
       </div>
-      <div>
+      <div className="max-h-full overflow-y-auto">
         <Components.Reminder />
       </div>
     </div>
