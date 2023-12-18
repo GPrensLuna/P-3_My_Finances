@@ -12,7 +12,8 @@ export const getTasks = async (req, res) => {
         select: 'name', 
       });
 
-    const filteredTasks = TasksInfo.filter(item => !item.done);
+    const filteredTasks = TasksInfo.filter(item => !item.done && !item.deleted);
+
 
     const modifiedTasksInfo = filteredTasks.map(item => ({
       _id: item._id,
