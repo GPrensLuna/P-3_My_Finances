@@ -5,6 +5,8 @@ import { URL } from "../../config.js";
 export const CardsTasks = ({
   id,
   name,
+  concept,
+  type,
   description,
   value,
   done,
@@ -28,15 +30,33 @@ export const CardsTasks = ({
   const handleConfirmClick = async () => {
     try {
       setLoading(true);
-      await fetch(`${URL}tasks`, {
+
+      const formData = {
+        concept,
+        description,
+        type,
+        value,
+      };
+
+      console.log("formData", formData);
+
+      const createTaskResponse = await fetch(`${URL}shopping`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ taskId: id }),
+        body: JSON.stringify(formData),
       });
 
-      await fetch(`${URL}tasks/${id}`, {
+      if (!createTaskResponse.ok) {
+        throw new Error(
+          `Failed to create task: ${createTaskResponse.statusText}`
+        );
+      }
+
+      const { taskId } = await createTaskResponse.json();
+
+      const updateTaskResponse = await fetch(`${URL}tasks/${taskId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -44,9 +64,15 @@ export const CardsTasks = ({
         body: JSON.stringify({ done: true }),
       });
 
+      if (!updateTaskResponse.ok) {
+        throw new Error(
+          `Failed to update task: ${updateTaskResponse.statusText}`
+        );
+      }
+
       setDoneAct(true);
     } catch (error) {
-      setError(error.message || "Error request PUT.");
+      setError(error.message || "Error in the request.");
     } finally {
       setLoading(false);
     }
@@ -129,6 +155,11 @@ export const CardsTasks = ({
             </button>
           </div>
         </div>
+        {error && (
+          <div className="text-red-500 font-bold text-sm mt-2">
+            Error: {error}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -137,8 +168,11 @@ export const CardsTasks = ({
 CardsTasks.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
+  concept: PropTypes.string,
+  type: PropTypes.string,
   description: PropTypes.string,
   value: PropTypes.number,
   done: PropTypes.bool,
+  deleted: PropTypes.bool,
   createdAt: PropTypes.string,
 };
