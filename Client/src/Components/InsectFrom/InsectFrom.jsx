@@ -10,9 +10,7 @@ export const InsectFrom = () => {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    fetch(`${URL}concept`, {
-      method: "GET",
-    })
+    fetch(`${URL}concept`)
       .then((response) => response.json())
       .then((data) => {
         setConceptData(data);
@@ -23,9 +21,7 @@ export const InsectFrom = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`${URL}type`, {
-      method: "GET",
-    })
+    fetch(`${URL}type`)
       .then((response) => response.json())
       .then((data) => {
         setTypeData(data);
