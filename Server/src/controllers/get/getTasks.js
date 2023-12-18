@@ -1,4 +1,3 @@
-
 import Tasks from '../../models/Tasks.js';
 
 export const getTasks = async (req, res) => {
@@ -12,15 +11,17 @@ export const getTasks = async (req, res) => {
         path: 'type',
         select: 'name', 
       });
-  
-    const modifiedTasksInfo = TasksInfo.map(item => ({
+
+    const filteredTasks = TasksInfo.filter(item => !item.done);
+
+    const modifiedTasksInfo = filteredTasks.map(item => ({
       _id: item._id,
-      name:item.name,
+      name: item.name,
       concept: item.concept.name,
       type: item.type.name, 
       description: item.description,
       value: item.value,
-      done:item.done,
+      done: item.done,
       deleted: item.deleted,
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
