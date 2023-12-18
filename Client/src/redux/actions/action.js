@@ -1,8 +1,8 @@
-// import { ADD_PRODUCTS_INFO } from "./actions_types.js";
+import { ADD_TRANSACTIONS } from "./actions_type.js";
 
-// export const addProductInfo = (addProductInfo) => {
-//   return {
-//     type: ADD_PRODUCTS_INFO,
-//     payload: addProductInfo,
-//   };
-// };
+ export const addProductInfo = (addTransactions) => {
+  return {
+    type: ADD_TRANSACTIONS,
+    payload: addTransactions,
+  };
+};

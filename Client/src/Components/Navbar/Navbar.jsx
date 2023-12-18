@@ -1,5 +1,4 @@
 import { NavBarLink } from "./NavBarLink/NavBarLink.jsx";
-import style from "./NavBar.module.css";
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { CiMenuBurger } from "react-icons/ci";
@@ -9,35 +8,20 @@ export const Navbar = () => {
   const handleClick = () => setClick(!click);
 
   const content = (
-    <div className={style.NavBarOp2}>
-      <ul className={style.NavBarLu2}>
-        <li className={style.NavBarLi2}>
-          <NavBarLink
-            spy="true"
-            smooth="true"
-            className={style.NavBarLink}
-            to="/"
-          >
+    <div className="lg:hidden block absolute top-10 w-full left-0 right-0 bg-slate-900 transition">
+      <ul className="text-center text-x1 p-10">
+        <li className=" my-4 py-4 border-b border-slate.800 hover:bg-slate-800 hover:rounded">
+          <NavBarLink spy="true" smooth="true" className="" to="/">
             Home
           </NavBarLink>
         </li>
-        <li className={style.NavBarLi2}>
-          <NavBarLink
-            spy="true"
-            smooth="true"
-            className={style.NavBarLink}
-            to="Insect"
-          >
+        <li className=" my-4 py-4 border-b border-slate.800 hover:bg-slate-800 hover:rounded">
+          <NavBarLink spy="true" smooth="true" className="" to="Insect">
             Insect Data
           </NavBarLink>
         </li>
-        <li className={style.NavBarLi2}>
-          <NavBarLink
-            spy="true"
-            smooth="true"
-            className={style.NavBarLink}
-            to="Table"
-          >
+        <li className=" my-4 py-4 border-b border-slate.800 hover:bg-slate-800 hover:rounded">
+          <NavBarLink spy="true" smooth="true" className="" to="Table">
             Table
           </NavBarLink>
         </li>
@@ -45,39 +29,29 @@ export const Navbar = () => {
     </div>
   );
   return (
-    <nav>
-      <div className={style.NavBarContainer}>
-        <div className={style.LogoContainer}>
-          <NavBarLink className={style.NavBarLinkLogo} to="/">
-            <span className={style.Logo}>logo</span>
+    <nav className="bg-slate-900" style={{ minWidth: "450px" }}>
+      <div className="h-10vh flex justify-between z-50 text-white lg:py-5 px-20 py-4">
+        <div className=" flex items-center flex-1">
+          <NavBarLink className="" to="/">
+            <span className="text-3-x1 font-bold">logo</span>
           </NavBarLink>
         </div>
-        <div className={style.NavBar}>
-          <div className={style.NavBarOp}>
-            <ul className={style.NavBarLu}>
-              <li className={style.NavBarLi}>
-                <NavBarLink
-                  spy="true"
-                  smooth="true"
-                  className={style.NavBarLink}
-                  to="/"
-                >
+        <div className="lg:flex sm:flex lg: flex-1 items-center justify-end font-normal hidden">
+          <div className="flex-10">
+            <ul className="flex gap-8 mr-16 text-[16px]">
+              <li className="hover:text-fuchsia-600 transit border-b-2 border-slate-900 hover:border-fuchsia-600 cursor-pointer">
+                <NavBarLink spy="true" smooth="true" className="" to="/">
                   Home
                 </NavBarLink>
               </li>
-              <li className={style.NavBarLi}>
-                <NavBarLink
-                  spy="true"
-                  smooth="true"
-                  className={style.NavBarLink}
-                  to="Insect"
-                >
+              <li className="hover:text-fuchsia-600 transit border-b-2 border-slate-900 hover:border-fuchsia-600 cursor-pointer">
+                <NavBarLink spy="true" smooth="true" className="" to="Insect">
                   Insect Data
                 </NavBarLink>
               </li>
-              <li className={style.NavBarLi}>
+              <li className="hover:text-fuchsia-600 transit border-b-2 border-slate-900 hover:border-fuchsia-600 cursor-pointer">
                 <NavBarLink
-                  className={style.NavBarLink}
+                  className=""
                   spy="true"
                   smooth="true"
                   to="dashboard"
@@ -90,8 +64,8 @@ export const Navbar = () => {
             </ul>
           </div>
         </div>
-        <div>{click && content}</div>
-        <button className={style.NavBarButton} onClick={handleClick}>
+        <div className="lg:hidden sm:block">{click && content}</div>
+        <button className="block sm:hidden transition" onClick={handleClick}>
           {click ? <FaTimes /> : <CiMenuBurger />}
         </button>
       </div>

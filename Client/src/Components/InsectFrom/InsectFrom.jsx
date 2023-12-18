@@ -59,7 +59,6 @@ export const InsectFrom = () => {
       value,
     };
 
-    // Send the data to your server using fetch or any other method
     fetch(`${URL}shopping`, {
       method: "POST",
       headers: {
@@ -67,12 +66,17 @@ export const InsectFrom = () => {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
-        console.log("Request sever:", data);
+        console.log("Request server:", data);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error("Fetch Error:", error);
       });
 
     // setConcept("");

@@ -1,44 +1,68 @@
 import { useEffect, useState } from "react";
 import { DataTable } from "./DataTable/DataTable.jsx";
 import { URL } from "../../config";
+// ... (previous code)
 
 export const Dashboard = () => {
   const [shoppingData, setShoppingData] = useState([]);
-
-  useEffect(() => {
-    fetch(`${URL}shopping`)
-      .then((response) => response.json())
-      .then((data) => {
-        setShoppingData(
-          data.map((item) => ({
-            ...item,
-            formattedCreatedAt: formatCreatedAt(item.createdAt),
-          }))
-        );
-      })
-      .catch((error) => {
-        console.error("Error request GET:", error);
-      });
-  }, []);
+  console.log("Item:", shoppingData);
 
   const formatCreatedAt = (createdAt) => {
     const date = new Date(createdAt);
+
     const formattedDate = `${date.getDate()}/${
       date.getMonth() + 1
     }/${date.getFullYear()}`;
     return formattedDate;
   };
 
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+    }).format(value);
+  };
+
+  useEffect(() => {
+    fetch(`${URL}shopping`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Request server:", data);
+
+        const formattedData = data.map(
+          ({
+            _id,
+            concept,
+            type,
+            description,
+            value,
+            createdAt,
+            updatedAt,
+          }) => ({
+            _id,
+            concept,
+            type,
+            description,
+            Value: formatCurrency(value),
+            createdAt,
+            updatedAt,
+            CreatedAt: formatCreatedAt(createdAt),
+          })
+        );
+
+        setShoppingData(formattedData);
+      })
+      .catch((error) => {
+        console.error("Error request GET:", error);
+      });
+  }, []);
+
   const columns = [
-    {
-      key: "formattedCreatedAt",
-      label: "Creation Date",
-      accessor: "formattedCreatedAt",
-    },
-    { key: "conceptName", label: "Concept Name", accessor: "concept.name" },
+    { key: "CreatedAt", label: "Created", accessor: "CreatedAt" },
+    { key: "concept", label: "Concept", accessor: "concept" },
     { key: "description", label: "Description", accessor: "description" },
-    { key: "typeName", label: "Type Name", accessor: "type.name" },
-    { key: "value", label: "Value", accessor: "value" },
+    { key: "type", label: "Type", accessor: "type" },
+    { key: "Value", label: "Value", accessor: "Value" },
   ];
 
   return (

@@ -28,7 +28,7 @@ export const Reminder = () => {
         onChange={handleCheckboxChange}
       />
       <label
-        className="relative cursor-pointer grid items-center w-fit-content transition-colors duration-300 ease-in mr-20"
+        className="cursor-pointer grid items-center w-fit-content transition-colors duration-300 ease-in mr-20"
         htmlFor="01"
       >
         Bread

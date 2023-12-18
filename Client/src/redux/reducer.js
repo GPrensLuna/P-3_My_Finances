@@ -1,25 +1,17 @@
+import { ADD_TRANSACTIONS } from './actions/actions_type';
 
-// const initialState = {
+const initialState = {
+  allTransactions: []
+};
 
-// };
+const rootReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case ADD_TRANSACTIONS:
+      return { ...state, allTransactions: payload};
 
-// const rootReducer = (state = initialState, { type }) => {
-//   switch (type) {
+    default:
+      return state;
+  }
+};
 
-
-//     default:
-//       return state;
-//   }
-// };
-
-// export default rootReducer;
-
-// reducers/index.js
-
-import { combineReducers } from 'redux';
-
-const rootReducer = combineReducers({
-  // Add other reducers here
-});
-
-export default rootReducer;
+export default rootReducer; 
