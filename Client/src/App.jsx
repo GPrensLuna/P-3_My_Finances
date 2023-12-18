@@ -7,10 +7,7 @@ function App() {
     <>
       <components.Navbar />
       <Routes>
-        <Route
-          path="/"
-          element={<layouts.Home style={{ minWidth: "450px" }} />}
-        ></Route>
+        <Route path="/" element={<layouts.Home />}></Route>
         <Route path="/Insect" element={<layouts.InsectData />}></Route>
       </Routes>
     </>

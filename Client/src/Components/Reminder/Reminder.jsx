@@ -60,6 +60,7 @@ export const Reminder = () => {
       {tasksData?.map((e) => (
         <CardsTasks
           key={e._id}
+          id={e._id}
           name={e.name}
           concept={e.concept}
           type={e.type}

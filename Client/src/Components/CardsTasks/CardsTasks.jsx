@@ -1,9 +1,19 @@
-import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { URL } from "../../config.js";
 
-export const CardsTasks = ({ name, description, value, done, createdAt }) => {
+export const CardsTasks = ({
+  id,
+  name,
+  description,
+  value,
+  done,
+  createdAt,
+}) => {
   const [doneAct, setDoneAct] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (done && !doneAct) {
@@ -15,13 +25,55 @@ export const CardsTasks = ({ name, description, value, done, createdAt }) => {
     }
   }, [done, doneAct]);
 
+  const handleConfirmClick = async () => {
+    try {
+      setLoading(true);
+      await fetch(`${URL}tasks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ taskId: id }),
+      });
+
+      await fetch(`${URL}tasks/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ done: true }),
+      });
+
+      setDoneAct(true);
+    } catch (error) {
+      setError(error.message || "Error request PUT.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    try {
+      setLoading(true);
+      await fetch(`${URL}tasks/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ deleted: true }),
+      });
+
+      setDoneAct(true);
+    } catch (error) {
+      setError(error.message || "Error request PUT.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (isHidden) {
     return null;
   }
-
-  const handleConfirmClick = () => {
-    setDoneAct(true);
-  };
 
   return (
     <div className={`m-2 ${doneAct ? "hidden" : ""}`}>
@@ -53,8 +105,9 @@ export const CardsTasks = ({ name, description, value, done, createdAt }) => {
             <button
               className="font-semibold text-sm text-green-500 px-5 py-1 rounded border border-green-500 hover:bg-green-700 hover:text-white"
               onClick={handleConfirmClick}
+              disabled={loading}
             >
-              Set up
+              {loading ? "Process..." : "Set up"}
             </button>
           </div>
           <div className="flex gap-1 text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
@@ -67,8 +120,12 @@ export const CardsTasks = ({ name, description, value, done, createdAt }) => {
               strokeLinecap="round"
               strokeLinejoin="round"
             ></svg>
-            <button className="font-semibold text-sm text-red-700 px-5 py-1 rounded border border-red-700 hover:bg-red-700 hover:text-white">
-              Delete
+            <button
+              className="font-semibold text-sm text-red-700 px-5 py-1 rounded border border-red-700 hover:bg-red-700 hover:text-white"
+              onClick={handleDeleteClick}
+              disabled={loading}
+            >
+              {loading ? "Process..." : "Delete"}
             </button>
           </div>
         </div>
@@ -78,12 +135,10 @@ export const CardsTasks = ({ name, description, value, done, createdAt }) => {
 };
 
 CardsTasks.propTypes = {
+  id: PropTypes.string,
   name: PropTypes.string,
-  concept: PropTypes.string,
-  type: PropTypes.string,
   description: PropTypes.string,
   value: PropTypes.number,
   done: PropTypes.bool,
-  deleted: PropTypes.bool,
   createdAt: PropTypes.string,
 };
