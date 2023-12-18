@@ -4,7 +4,6 @@ import Type from '../../models/Type.js';
 
 export const postInsectTasks = async (req, res) => {
   const { name,concept, type, description, value, done ,deleted} = req.body;
-  console.log('req.body', req.body)
 
  if (!name || !concept || !type || !description || !value) {
   return res.status(400).json({ error: 'All fields must be provided.' });
