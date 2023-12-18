@@ -79,16 +79,16 @@ export const InsectFrom = () => {
         console.error("Fetch Error:", error);
       });
 
-    // setConcept("");
-    // setDescription("");
-    // setSelectedPaid("");
-    // setValue("");
+    setConcept("");
+    setDescription("");
+    setSelectedPaid("");
+    setValue("");
   };
 
   return (
     <>
       <form
-        className="mx-auto p-6 bg-white shadow-md rounded-md my-4 grid"
+        className="mx-auto p-6 bg-white shadow-md rounded-md my-4 grid m-20 border border-solid border-gray-500"
         onSubmit={handleSubmit}
         style={{ minWidth: "500px", maxWidth: "1250px" }}
       >

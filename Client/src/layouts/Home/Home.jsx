@@ -2,10 +2,14 @@ import * as Components from "../../Components";
 
 export const Home = () => {
   return (
-    <>
-      <Components.InsectFrom />
-      <Components.Reminder />
-      <Components.Dashboard />
-    </>
+    <div className="flex">
+      <div className="flex-1">
+        <Components.InsectFrom />
+        <Components.Dashboard />
+      </div>
+      <div>
+        <Components.Reminder />
+      </div>
+    </div>
   );
 };

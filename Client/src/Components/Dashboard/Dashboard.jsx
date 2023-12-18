@@ -5,7 +5,6 @@ import { URL } from "../../config";
 
 export const Dashboard = () => {
   const [shoppingData, setShoppingData] = useState([]);
-  console.log("Item:", shoppingData);
 
   const formatCreatedAt = (createdAt) => {
     const date = new Date(createdAt);
@@ -27,8 +26,6 @@ export const Dashboard = () => {
     fetch(`${URL}shopping`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Request server:", data);
-
         const formattedData = data.map(
           ({
             _id,
