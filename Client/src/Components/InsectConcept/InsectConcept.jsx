@@ -52,10 +52,10 @@ export const InsectConcept = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+      <form onSubmit={handleSubmit} className="min-w-[120px] max-w-md mx-auto">
         <label
           htmlFor="insectType"
-          className="block text-gray-700 justify-center text-sm font-bold mb-2"
+          className="block text-gray-700 justify-center text-sm font-bold mb-2 min-w-[120px]"
         >
           Insect concept
           <input

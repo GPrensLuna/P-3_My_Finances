@@ -78,10 +78,14 @@ export const InsectTasks = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-md mx-auto"
+        style={{ minWidth: "450px" }}
+      >
         <label
           htmlFor="name"
-          className="block text-gray-700 text-sm font-bold mb-2"
+          className="block text-gray-700 text-sm font-bold mb-2 m-3"
         >
           Task Name
           <input
@@ -96,7 +100,7 @@ export const InsectTasks = () => {
 
         <label
           htmlFor="concept"
-          className="block text-gray-700 text-sm font-bold mb-2"
+          className="block text-gray-700 text-sm font-bold mb-2 m-3 "
         >
           Concept
           <select
@@ -117,7 +121,7 @@ export const InsectTasks = () => {
 
         <label
           htmlFor="type"
-          className="block text-gray-700 text-sm font-bold mb-2"
+          className="block text-gray-700 text-sm font-bold mb-2 m-3"
         >
           Type
           <select
@@ -138,7 +142,7 @@ export const InsectTasks = () => {
 
         <label
           htmlFor="description"
-          className="block text-gray-700 text-sm font-bold mb-2"
+          className="block text-gray-700 text-sm font-bold mb-2 m-3"
         >
           Description
           <input
@@ -153,7 +157,7 @@ export const InsectTasks = () => {
 
         <label
           htmlFor="value"
-          className="block text-gray-700 text-sm font-bold mb-2"
+          className="block text-gray-700 text-sm font-bold mb-2 m-3"
         >
           Value
           <input

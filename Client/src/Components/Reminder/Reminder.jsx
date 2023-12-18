@@ -56,7 +56,7 @@ export const Reminder = () => {
   }, []);
 
   return (
-    <div className="max-h-96">
+    <div className="">
       {tasksData?.map((e) => (
         <CardsTasks
           key={e._id}

@@ -63,13 +63,5 @@ export const Dashboard = () => {
     { key: "Value", label: "Value", accessor: "Value" },
   ];
 
-  return (
-    <div>
-      <div className="rounded-lg border border-gray-200">
-        <div className="overflow-x-auto rounded-t-lg">
-          <DataTable data={shoppingData} columns={columns} />
-        </div>
-      </div>
-    </div>
-  );
+  return <DataTable data={shoppingData} columns={columns} />;
 };

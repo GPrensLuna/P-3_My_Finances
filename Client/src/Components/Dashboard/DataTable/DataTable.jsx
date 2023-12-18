@@ -67,11 +67,8 @@ export const DataTable = ({ data, columns, onFilterChange }) => {
   });
 
   return (
-    <div className="mx-auto my-auto">
-      <table
-        className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm center-table"
-        style={{ margin: "0 auto" }}
-      >
+    <div className="overflow-x-auto">
+      <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-base mx-auto p-3">
         <thead className="ltr:text-left rtl:text-right">
           <tr>
             {columns.map((column) => (
@@ -93,7 +90,6 @@ export const DataTable = ({ data, columns, onFilterChange }) => {
             ))}
           </tr>
         </thead>
-
         <tbody className="divide-y divide-gray-200">
           {filteredData.map((item) => (
             <tr key={item._id}>
