@@ -1,16 +1,19 @@
-import Shopping from '../../models/Shopping.js';
+import Tasks from '../../models/Tasks.js';
 import Concept from '../../models/Concept.js';
 import Type from '../../models/Type.js';
 
-export const postInsectShopping = async (req, res) => {
-  const { concept, type, description, value } = req.body;
+export const postInsectTasks = async (req, res) => {
+  const { name,concept, type, description, value, done ,deleted} = req.body;
+  console.log('req.body', req.body)
 
-  if (!concept || !type || !description || !value) {
-    return res.status(400).json({ error: 'All fields must be provided.' });
-  }
+ if (!name || !concept || !type || !description || !value) {
+  return res.status(400).json({ error: 'All fields must be provided.' });
+}
+
 
   const lowerCaseConcept = concept.toLowerCase();
   const lowerCaseType = type.toLowerCase();
+  const lowerCaseName = name.toLowerCase();
 
   if (isNaN(value)) {
     return res.status(400).json({ error: 'Value must be a numeric value.' });
@@ -29,17 +32,19 @@ export const postInsectShopping = async (req, res) => {
       { upsert: true, new: true }
     );
 
-    const newShopping = new Shopping({
+    const newTasks = new Tasks({
+      name:lowerCaseName,
       concept: conceptObj._id,
       type: typeObj._id,
       description,
       value,
       done,
+      deleted,
     });
 
-    const savedShopping = await newShopping.save();
+    const savedTasks = await newTasks.save();
 
-    res.json(savedShopping);
+    res.json(savedTasks);
   } catch (error) {
     console.error('Error saving to the database:', error);
     res.status(500).json({ error: 'Internal server error' });

@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
 
-const shoppingSchema = new mongoose.Schema({
-  concept: {
+const tasksSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+   concept: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Concept',
     required: true,
@@ -19,18 +23,18 @@ const shoppingSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-   done: {
+  done: {
     type: Boolean,
-    required: true,
-    default:true,
+    default:false,
   },
-    deleted: {
+ deleted: {
     type: Boolean,
     default: false,
   },
-}, {
+},
+{
   versionKey: false,
   timestamps: true,
 });
 
-export default mongoose.model('Shopping', shoppingSchema);
+export default mongoose.model('Tasks', tasksSchema);

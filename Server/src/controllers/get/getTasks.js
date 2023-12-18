@@ -1,8 +1,9 @@
-import Shopping from '../../models/Shopping.js';
 
-export const getShopping = async (req, res) => {
+import Tasks from '../../models/Tasks.js';
+
+export const getTasks = async (req, res) => {
   try {
-    const shoppingInfo = await Shopping.find()
+    const TasksInfo = await Tasks.find()
       .populate({
         path: 'concept',
         select: 'name', 
@@ -12,19 +13,20 @@ export const getShopping = async (req, res) => {
         select: 'name', 
       });
   
-    const modifiedShoppingInfo = shoppingInfo.map(item => ({
+    const modifiedTasksInfo = TasksInfo.map(item => ({
       _id: item._id,
+      name:item.name,
       concept: item.concept.name,
       type: item.type.name, 
       description: item.description,
       value: item.value,
+      done:item.done,
       deleted: item.deleted,
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
-      done:item.done,
     }));
 
-    res.status(200).json(modifiedShoppingInfo);
+    res.status(200).json(modifiedTasksInfo);
   } catch (error) {
     console.error('Error fetching information:', error);
     res.status(500).json({ error: 'Error processing the request' });

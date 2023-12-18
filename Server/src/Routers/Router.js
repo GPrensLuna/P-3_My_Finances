@@ -1,30 +1,18 @@
 import { Router } from "express";
 
-import { getShopping } from '../controllers/get/getShopping.js'
-import { getConcept } from '../controllers/get/getConcept.js'
-import { getType } from '../controllers/get/getType.js'
-
-
-import { postInsectShopping } from '../controllers/post/postInsectShopping.js'
-import { postConcept } from '../controllers/post/postConcept.js'
-import { postType } from '../controllers/post/postType.js'
+import * as get from '../controllers/get/index.js'
+import * as post from '../controllers/post/index.js'
 
 const router = Router();
 
+router.get("/type", get.getType)
+router.get("/tasks", get.getTasks)
+router.get("/concept", get.getConcept)
+router.get("/shopping", get.getShopping)
 
-
-router.get("/", (req, res) => {
-  return res.json("router");
-});
-
-router.get("/shopping", getShopping)
-router.get("/concept", getConcept)
-router.get("/type", getType)
-
-router.post("/shopping", postInsectShopping)
-router.post("/concept", postConcept)
-router.post("/type", postType)
-
-
+router.post("/type", post.postType)
+router.post("/concept", post.postConcept)
+router.post("/tasks", post.postInsectTasks)
+router.post("/shopping", post.postInsectShopping)
 
 export default router;
