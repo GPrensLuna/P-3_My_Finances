@@ -3,7 +3,7 @@ import Concept from '../../models/Concept.js';
 import Type from '../../models/Type.js';
 
 export const postInsectShopping = async (req, res) => {
-  const { concept, type, description, value } = req.body;
+  const { concept, type, description, value ,done ,deleted} = req.body;
 
   if (!concept || !type || !description || !value) {
     return res.status(400).json({ error: 'All fields must be provided.' });
@@ -35,6 +35,7 @@ export const postInsectShopping = async (req, res) => {
       description,
       value,
       done,
+      deleted,
     });
 
     const savedShopping = await newShopping.save();
