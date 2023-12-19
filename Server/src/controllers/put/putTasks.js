@@ -3,9 +3,8 @@ import Tasks from '../../models/Tasks.js';
 export const putTasks = async (req, res) => {
   try {
     const taskId = req.params.id;
-    const { done } = req.body; // Assuming the new value for the 'done' attribute is sent in the request body
+    const { done } = req.body; 
 
-    // Validate if the 'done' attribute is provided in the request body
     if (done === undefined || done === null) {
       return res.status(400).json({ error: 'The "done" attribute is required in the request body' });
     }
