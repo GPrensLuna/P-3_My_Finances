@@ -1,24 +1,21 @@
 import Tasks from '../../models/Tasks.js';
 
 export const putTasks = async (req, res) => {
-  const { id } = req.params; 
-  const updatedData = req.body;
-  console.log(updatedData) 
+  const { id } = req.params;
 
   try {
-    const existingTask = await Tasks.findById(id);
+    // Buscar el componente tasks por ID en la base de datos
+    const tarea = await Tasks.findById(id);
 
-    if (!existingTask) {
-      return res.status(404).json({ message: 'tasks not found' });
+    // Verificar si se encontró el componente
+    if (!tarea) {
+      return res.status(404).json({ message: 'Componente tasks no encontrado' });
     }
 
-    await Tasks.findByIdAndUpdate(id, updatedData);
-
-    const updatedTask = await Tasks.findById(id);
-
-    res.status(200).json(updatedTask);
+    // Devolver la información del componente tasks encontrado
+    res.status(200).json({ tarea });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error internal server' });
+    res.status(500).json({ message: 'Error interno del servidor' });
   }
 };
