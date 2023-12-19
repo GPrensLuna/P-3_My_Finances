@@ -1,6 +1,6 @@
 import Tasks from '../../models/Tasks.js';
 
-export const update = async (req, res) => {
+export const putTasks = async (req, res) => {
   try {
     let id = req.profile;
     req.body = { ...req.body, done: Date.now() };
