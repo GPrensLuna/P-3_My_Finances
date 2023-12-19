@@ -1,28 +1,19 @@
-import Tasks from '../../models/Tasks.js';
+import Task from '../../models/Task.js';
 
 export const putTasks = async (req, res) => {
-  const { id } = req.params;
+  const { done } = req.body;
+  const id = req.params.id;
 
   try {
-    // Capturar la información antes de la actualización
-    const tareaAntes = await Tasks.findById(id);
+    const taskToUpdate = await Task.findByIdAndUpdate(id, { done }, { new: true });
 
-    // Verificar si se encontró el componente
-    if (!tareaAntes) {
-      return res.status(404).json({ message: 'Componente tasks no encontrado' });
+    if (!taskToUpdate) {
+      return res.status(404).json({ error: "Task not found" });
     }
 
-    // Realizar la actualización en la base de datos
-    const tareaActualizada = await Tasks.findByIdAndUpdate(
-      id,
-      { /* Aquí van los datos actualizados que recibiste en la solicitud */ },
-      { new: true } // Esto devuelve el documento actualizado en lugar del antiguo
-    );
-
-    // Devolver la información del componente actualizado
-    res.status(200).json({ tareaAntes, tareaDespues: tareaActualizada });
+    res.json(taskToUpdate);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error interno del servidor' });
+    console.error("Error updating task:", error);
+    res.status(500).json({ error: "Error updating task" });
   }
 };
