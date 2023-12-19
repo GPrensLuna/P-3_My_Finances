@@ -1,19 +1,30 @@
 import Tasks from '../../models/Tasks.js';
 
 export const putTasks = async (req, res) => {
-  const { done } = req.body;
-  const id = req.params.id;
-
   try {
-    const taskToUpdate = await Tasks.findByIdAndUpdate(id, { done });
+    const { done } = req.body;
+    const id = req.params.id;
 
-    if (!taskToUpdate) {
-      return res.status(404).json({ error: "Task not found" });
+    // Verificar si el ID es válido (opcional)
+    if (!isValidObjectId(id)) {
+      return res.status(400).json({ message: 'ID no válido' });
     }
 
-    res.json(taskToUpdate);
+    // Actualizar la tarea en la base de datos
+    const updatedTask = await Tasks.findByIdAndUpdate(
+      id,
+      { done },
+      { new: true } // Devuelve el documento modificado
+    );
+
+    // Verificar si la tarea existe
+    if (!updatedTask) {
+      return res.status(404).json({ message: 'Tarea no encontrada' });
+    }
+
+    res.status(200).json(updatedTask);
   } catch (error) {
-    console.error("Error updating task:", error);
-    res.status(500).json({ error: "Error updating task" });
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
   }
 };
