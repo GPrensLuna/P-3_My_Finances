@@ -4,16 +4,23 @@ export const putTasks = async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Buscar el componente tasks por ID en la base de datos
-    const tarea = await Tasks.findById(id);
+    // Capturar la información antes de la actualización
+    const tareaAntes = await Tasks.findById(id);
 
     // Verificar si se encontró el componente
-    if (!tarea) {
+    if (!tareaAntes) {
       return res.status(404).json({ message: 'Componente tasks no encontrado' });
     }
 
-    // Devolver la información del componente tasks encontrado
-    res.status(200).json({ tarea });
+    // Realizar la actualización en la base de datos
+    const tareaActualizada = await Tasks.findByIdAndUpdate(
+      id,
+      { /* Aquí van los datos actualizados que recibiste en la solicitud */ },
+      { new: true } // Esto devuelve el documento actualizado en lugar del antiguo
+    );
+
+    // Devolver la información del componente actualizado
+    res.status(200).json({ tareaAntes, tareaDespues: tareaActualizada });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error interno del servidor' });
