@@ -1,11 +1,11 @@
-import Task from '../../models/Task.js';
+import Tasks from '../../models/Tasks.js';
 
 export const putTasks = async (req, res) => {
   const { done } = req.body;
   const id = req.params.id;
 
   try {
-    const taskToUpdate = await Task.findByIdAndUpdate(id, { done }, { new: true });
+    const taskToUpdate = await Tasks.findByIdAndUpdate(id, { done }, { new: true });
 
     if (!taskToUpdate) {
       return res.status(404).json({ error: "Task not found" });
