@@ -4,7 +4,7 @@ export const update = async (req, res) => {
   try {
     let id = req.profile;
     req.body = { ...req.body, done: Date.now() };
-    await User.findByIdAndUpdate(id._id, { $set: req.body }, { new: true });
+    await Tasks.findByIdAndUpdate(id._id, { $set: req.body }, { new: true });
     res
       .status(200)
       .json({ message: "the profile has been updated successfuly!" });
