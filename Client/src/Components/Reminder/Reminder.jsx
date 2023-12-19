@@ -1,87 +1,13 @@
-import { useState, useEffect } from "react";
+import { CardsTasks } from "../CardsTasks/CardsTasks.jsx";
 import PropTypes from "prop-types";
 
-import { URL } from "../../config";
-import { CardsTasks } from "../CardsTasks/CardsTasks.jsx";
-
-export const Reminder = ({ onTableUpdate }) => {
-  const [tasksData, setTasksData] = useState([]);
-
-  const formatCreatedAt = (createdAt) => {
-    const date = new Date(createdAt);
-
-    const formattedDate = `${date.getDate()}/${
-      date.getMonth() + 1
-    }/${date.getFullYear()}`;
-    return formattedDate;
-  };
-
-  useEffect(() => {
-    fetch(`${URL}tasks`, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const formattedData = data.map(
-          ({
-            _id,
-            concept,
-            type,
-            description,
-            value,
-            createdAt,
-            updatedAt,
-          }) => ({
-            _id,
-            concept,
-            type,
-            description,
-            value,
-            createdAt,
-            updatedAt,
-            CreatedAt: formatCreatedAt(createdAt),
-          })
-        );
-
-        setTasksData(formattedData);
-      })
-      .catch((error) => {
-        console.error("Error request GET:", error);
-      });
-  }, []);
-
-  const handleUpdateTasks = () => {
-    fetch(`${URL}tasks`, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const formattedData = data.map(
-          ({
-            _id,
-            concept,
-            type,
-            description,
-            value,
-            createdAt,
-            updatedAt,
-          }) => ({
-            _id,
-            concept,
-            type,
-            description,
-            value,
-            createdAt,
-            updatedAt,
-            CreatedAt: formatCreatedAt(createdAt),
-          })
-        );
-        setTasksData(formattedData);
-        onTableUpdate();
-      })
-      .catch((error) => {
-        console.error("Error request GET:", error);
-      });
+export const Reminder = ({ tasksData, handleUpdateTasks }) => {
+  const onUpdateTasks = async () => {
+    try {
+      await handleUpdateTasks();
+    } catch (error) {
+      console.error("Error updating tasks:", error);
+    }
   };
 
   return (
@@ -98,7 +24,7 @@ export const Reminder = ({ onTableUpdate }) => {
           done={e.done}
           deleted={e.deleted}
           createdAt={e.CreatedAt}
-          onUpdateTasks={handleUpdateTasks}
+          onUpdateTasks={onUpdateTasks}
         />
       ))}
     </div>
@@ -106,5 +32,6 @@ export const Reminder = ({ onTableUpdate }) => {
 };
 
 Reminder.propTypes = {
-  onTableUpdate: PropTypes.func,
+  tasksData: PropTypes.array.isRequired,
+  handleUpdateTasks: PropTypes.func.isRequired,
 };

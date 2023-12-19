@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { URL } from "../../config";
+import PropTypes from "prop-types";
 
-export const InsectFrom = () => {
+export const InsectFrom = ({ handleUpdateFrom }) => {
   const [concept, setConcept] = useState("");
   const [typeData, setTypeData] = useState([]);
   const [conceptData, setConceptData] = useState([]);
@@ -87,6 +88,14 @@ export const InsectFrom = () => {
     setDescription("");
     setSelectedPaid("");
     setValue("");
+  };
+
+  const handleUpdate = async () => {
+    try {
+      await handleUpdateFrom();
+    } catch (error) {
+      console.error("Error updating tasks:", error);
+    }
   };
 
   return (
@@ -176,6 +185,7 @@ export const InsectFrom = () => {
             <button
               type="submit"
               className="w-full md:w-250 max-w-300 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700"
+              onClick={handleUpdate}
             >
               Save
             </button>
@@ -184,4 +194,8 @@ export const InsectFrom = () => {
       </form>
     </>
   );
+};
+
+InsectFrom.propTypes = {
+  handleUpdateFrom: PropTypes.func,
 };
