@@ -88,14 +88,7 @@ export const InsectFrom = ({ handleUpdateFrom }) => {
     setDescription("");
     setSelectedPaid("");
     setValue("");
-  };
-
-  const handleUpdate = async () => {
-    try {
-      await handleUpdateFrom();
-    } catch (error) {
-      console.error("Error updating tasks:", error);
-    }
+    handleUpdateFrom();
   };
 
   return (
@@ -185,7 +178,6 @@ export const InsectFrom = ({ handleUpdateFrom }) => {
             <button
               type="submit"
               className="w-full md:w-250 max-w-300 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-700"
-              onClick={handleUpdate}
             >
               Save
             </button>
