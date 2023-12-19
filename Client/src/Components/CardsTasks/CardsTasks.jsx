@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { URL } from "../../config.js";
 
 export const CardsTasks = ({
-  id,
+  // id,
   name,
   concept,
   type,
@@ -17,6 +17,13 @@ export const CardsTasks = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // const formatCurrency = (value) => {
+  //   return new Intl.NumberFormat("es-CO", {
+  //     style: "currency",
+  //     currency: "COP",
+  //   }).format(value);
+  // };
+
   useEffect(() => {
     if (done && !doneAct) {
       setIsHidden(true);
@@ -27,79 +34,46 @@ export const CardsTasks = ({
     }
   }, [done, doneAct]);
 
+  if (isHidden) {
+    return null;
+  }
+
   const handleConfirmClick = async () => {
     try {
       setLoading(true);
 
-      const formData = {
+      const jsonData = {
         concept,
-        description,
         type,
+        description,
         value,
       };
 
-      console.log("formData", formData);
+      console.log(jsonData);
 
-      const createTaskResponse = await fetch(`${URL}shopping`, {
+      const response = await fetch(`${URL}shopping`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json", // Set appropriate headers
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(jsonData), // Convert JSON data to string
       });
 
-      if (!createTaskResponse.ok) {
-        throw new Error(
-          `Failed to create task: ${createTaskResponse.statusText}`
-        );
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log("Server Response:", responseData);
+        console.log("Tarea configurada correctamente");
+      } else {
+        const errorData = await response.json(); // You can also use response.text() for non-JSON responses
+        console.error("Server Error:", errorData);
+        throw new Error("Error al configurar la tarea");
       }
-
-      const { taskId } = await createTaskResponse.json();
-
-      const updateTaskResponse = await fetch(`${URL}tasks/${taskId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ done: true }),
-      });
-
-      if (!updateTaskResponse.ok) {
-        throw new Error(
-          `Failed to update task: ${updateTaskResponse.statusText}`
-        );
-      }
-
-      setDoneAct(true);
     } catch (error) {
-      setError(error.message || "Error in the request.");
+      setError(error.message);
     } finally {
       setLoading(false);
     }
   };
-
-  const handleDeleteClick = async () => {
-    try {
-      setLoading(true);
-      await fetch(`${URL}tasks/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ deleted: true }),
-      });
-
-      setDoneAct(true);
-    } catch (error) {
-      setError(error.message || "Error request PUT.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (isHidden) {
-    return null;
-  }
 
   return (
     <div className={`m-2 ${doneAct ? "hidden" : ""}`}>
@@ -148,7 +122,7 @@ export const CardsTasks = ({
             ></svg>
             <button
               className="font-semibold text-sm text-red-700 px-5 py-1 rounded border border-red-700 hover:bg-red-700 hover:text-white"
-              onClick={handleDeleteClick}
+              // onClick={"handleDeleteClick"}
               disabled={loading}
             >
               {loading ? "Process..." : "Delete"}

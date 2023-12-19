@@ -14,13 +14,6 @@ export const Reminder = () => {
     return formattedDate;
   };
 
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat("es-CO", {
-      style: "currency",
-      currency: "COP",
-    }).format(value);
-  };
-
   useEffect(() => {
     fetch(`${URL}tasks`, {
       method: "GET",
@@ -41,7 +34,7 @@ export const Reminder = () => {
             concept,
             type,
             description,
-            Value: formatCurrency(value),
+            value,
             createdAt,
             updatedAt,
             CreatedAt: formatCreatedAt(createdAt),
@@ -65,7 +58,7 @@ export const Reminder = () => {
           concept={e.concept}
           type={e.type}
           description={e.description}
-          value={e.Value}
+          value={e.value}
           done={e.done}
           deleted={e.deleted}
           createdAt={e.CreatedAt}
