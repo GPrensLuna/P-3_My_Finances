@@ -16,7 +16,7 @@ router.post("/concept", post.postConcept)
 router.post("/tasks", post.postInsectTasks)
 router.post("/shopping", post.postInsectShopping)
 
-router.put("/tasks/:taskId", put.putTasks)
+router.put("/tasks/:idTasks", put.putTasks)
 
 
 export default router;

@@ -2,11 +2,11 @@ import Tasks from '../../models/Tasks.js';
 
 export const putTasks = async (req, res) => {
   try {
-    const taskId = req.params.id;
+    const idTasks = req.params.id;
     const { done } = req.body; 
 
     const updatedTask = await Tasks.findByIdAndUpdate(
-      taskId,
+      idTasks,
       { $set: { done } },
       { new: true }
     );
