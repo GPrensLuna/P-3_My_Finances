@@ -2,7 +2,8 @@ import Tasks from '../../models/Tasks.js';
 
 export const putTasks = async (req, res) => {
   const { id } = req.params; 
-  const updatedData = req.body; 
+  const updatedData = req.body;
+  console.log(updatedData) 
 
   try {
     const existingTask = await Tasks.findById(id);
