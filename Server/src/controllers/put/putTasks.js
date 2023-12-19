@@ -2,7 +2,7 @@ import Tasks from '../../models/Tasks.js';
 
 export const putTasks = async (req, res) => {
   try {
-    const taskId = req.body.taskId;
+    const taskId = req.params.id; 
 
     const { done, deleted } = req.body;
 
