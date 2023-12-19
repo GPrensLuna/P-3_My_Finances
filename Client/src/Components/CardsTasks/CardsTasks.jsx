@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { URL } from "../../config.js";
 
 export const CardsTasks = ({
-  // id,
+  id,
   name,
   concept,
   type,
@@ -11,6 +11,7 @@ export const CardsTasks = ({
   value,
   done,
   createdAt,
+  onUpdateTasks,
 }) => {
   const [doneAct, setDoneAct] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
@@ -49,25 +50,55 @@ export const CardsTasks = ({
         value,
       };
 
-      console.log(jsonData);
-
-      const response = await fetch(`${URL}shopping`, {
+      await fetch(`${URL}shopping`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Set appropriate headers
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(jsonData), // Convert JSON data to string
+        body: JSON.stringify(jsonData),
       });
 
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("Server Response:", responseData);
-        console.log("Tarea configurada correctamente");
-      } else {
-        const errorData = await response.json(); // You can also use response.text() for non-JSON responses
-        console.error("Server Error:", errorData);
-        throw new Error("Error al configurar la tarea");
+      const updatedData = {
+        deleted: true,
+      };
+
+      const putResponse = await fetch(`${URL}tasks/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+      if (!putResponse.ok) {
+        throw new Error(`HTTP error! Status: ${putResponse.status}`);
       }
+      onUpdateTasks();
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    try {
+      setLoading(true);
+
+      const updatedData = {
+        done: true,
+      };
+
+      const putResponse = await fetch(`${URL}tasks/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
+      if (!putResponse.ok) {
+        throw new Error(`HTTP error! Status: ${putResponse.status}`);
+      }
+      onUpdateTasks();
     } catch (error) {
       setError(error.message);
     } finally {
@@ -122,7 +153,7 @@ export const CardsTasks = ({
             ></svg>
             <button
               className="font-semibold text-sm text-red-700 px-5 py-1 rounded border border-red-700 hover:bg-red-700 hover:text-white"
-              // onClick={"handleDeleteClick"}
+              onClick={handleDeleteClick}
               disabled={loading}
             >
               {loading ? "Process..." : "Delete"}
@@ -149,4 +180,5 @@ CardsTasks.propTypes = {
   done: PropTypes.bool,
   deleted: PropTypes.bool,
   createdAt: PropTypes.string,
+  onUpdateTasks: PropTypes.func,
 };

@@ -1,17 +1,18 @@
-import { ADD_TRANSACTIONS } from './actions/actions_type';
+import { ADD_PRODUCTS_INFO } from "./actions/actions_types.js";
 
 const initialState = {
-  allTransactions: []
+  filterProducts: [],
+  allProducts: [],
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case ADD_TRANSACTIONS:
-      return { ...state, allTransactions: payload};
+    case ADD_PRODUCTS_INFO:
+      return { ...state, allProducts: payload, filterProducts: payload };
 
     default:
       return state;
   }
 };
 
-export default rootReducer; 
+export default rootReducer;

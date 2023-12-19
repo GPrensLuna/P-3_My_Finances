@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+
 import { URL } from "../../config";
 import { CardsTasks } from "../CardsTasks/CardsTasks.jsx";
 
-export const Reminder = () => {
+export const Reminder = ({ onTableUpdate }) => {
   const [tasksData, setTasksData] = useState([]);
 
   const formatCreatedAt = (createdAt) => {
@@ -48,6 +50,40 @@ export const Reminder = () => {
       });
   }, []);
 
+  const handleUpdateTasks = () => {
+    fetch(`${URL}tasks`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const formattedData = data.map(
+          ({
+            _id,
+            concept,
+            type,
+            description,
+            value,
+            createdAt,
+            updatedAt,
+          }) => ({
+            _id,
+            concept,
+            type,
+            description,
+            value,
+            createdAt,
+            updatedAt,
+            CreatedAt: formatCreatedAt(createdAt),
+          })
+        );
+        setTasksData(formattedData);
+        onTableUpdate();
+      })
+      .catch((error) => {
+        console.error("Error request GET:", error);
+      });
+  };
+
   return (
     <div className="">
       {tasksData?.map((e) => (
@@ -62,8 +98,13 @@ export const Reminder = () => {
           done={e.done}
           deleted={e.deleted}
           createdAt={e.CreatedAt}
+          onUpdateTasks={handleUpdateTasks}
         />
       ))}
     </div>
   );
+};
+
+Reminder.propTypes = {
+  onTableUpdate: PropTypes.func,
 };

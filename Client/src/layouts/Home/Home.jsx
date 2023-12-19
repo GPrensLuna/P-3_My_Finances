@@ -1,6 +1,12 @@
+import { useState } from "react";
 import * as Components from "../../Components";
 
 export const Home = () => {
+  const [updateTable, setUpdateTable] = useState(false);
+
+  const handleTableUpdate = () => {
+    setUpdateTable(!updateTable);
+  };
   return (
     <div className="flex">
       <div className="flex-1">
@@ -10,7 +16,7 @@ export const Home = () => {
         </div>
       </div>
       <div className="max-h-full overflow-y-auto">
-        <Components.Reminder />
+        <Components.Reminder onTableUpdate={handleTableUpdate} />
       </div>
     </div>
   );

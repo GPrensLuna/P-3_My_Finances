@@ -55,6 +55,40 @@ export const Dashboard = () => {
       });
   }, []);
 
+  const handleUpdateDashboard = () => {
+    fetch(`${URL}shopping`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const formattedData = data.map(
+          ({
+            _id,
+            concept,
+            type,
+            description,
+            value,
+            createdAt,
+            updatedAt,
+          }) => ({
+            _id,
+            concept,
+            type,
+            description,
+            Value: formatCurrency(value),
+            createdAt,
+            updatedAt,
+            CreatedAt: formatCreatedAt(createdAt),
+          })
+        );
+
+        setShoppingData(formattedData);
+      })
+      .catch((error) => {
+        console.error("Error request GET:", error);
+      });
+  };
+
   const columns = [
     { key: "CreatedAt", label: "Created", accessor: "CreatedAt" },
     { key: "concept", label: "Concept", accessor: "concept" },
@@ -63,5 +97,11 @@ export const Dashboard = () => {
     { key: "Value", label: "Value", accessor: "Value" },
   ];
 
-  return <DataTable data={shoppingData} columns={columns} />;
+  return (
+    <DataTable
+      data={shoppingData}
+      columns={columns}
+      handleUpdateDashboard={handleUpdateDashboard}
+    />
+  );
 };

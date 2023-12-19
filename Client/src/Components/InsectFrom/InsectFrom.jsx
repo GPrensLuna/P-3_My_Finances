@@ -2,15 +2,17 @@ import { useState, useEffect } from "react";
 import { URL } from "../../config";
 
 export const InsectFrom = () => {
-  const [conceptData, setConceptData] = useState([]);
-  const [typeData, setTypeData] = useState([]);
   const [concept, setConcept] = useState("");
+  const [typeData, setTypeData] = useState([]);
+  const [conceptData, setConceptData] = useState([]);
   const [description, setDescription] = useState("");
   const [selectedPaid, setSelectedPaid] = useState("");
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    fetch(`${URL}concept`)
+    fetch(`${URL}concept`, {
+      method: "GET",
+    })
       .then((response) => response.json())
       .then((data) => {
         setConceptData(data);
@@ -21,7 +23,9 @@ export const InsectFrom = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`${URL}type`)
+    fetch(`${URL}type`, {
+      method: "GET",
+    })
       .then((response) => response.json())
       .then((data) => {
         setTypeData(data);

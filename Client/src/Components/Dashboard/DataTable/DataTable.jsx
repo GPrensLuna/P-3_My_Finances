@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 export const DataTable = ({ data, columns, onFilterChange }) => {
@@ -15,6 +15,10 @@ export const DataTable = ({ data, columns, onFilterChange }) => {
     });
     onFilterChange && onFilterChange(filters);
   };
+
+  useEffect(() => {
+    onFilterChange && onFilterChange(filters);
+  }, [filters, onFilterChange]);
 
   const handleSort = (columnKey) => {
     let direction = "ascending";
