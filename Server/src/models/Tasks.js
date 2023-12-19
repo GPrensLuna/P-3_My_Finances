@@ -3,25 +3,20 @@ import mongoose from 'mongoose';
 const tasksSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
   },
    concept: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Concept',
-    required: true,
   },
   type: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Type',
-    required: true,
   },
   description: {
     type: String,
-    required: true,
   },
   value: {
     type: Number,
-    required: true,
   },
   done: {
     type: Boolean,
