@@ -160,7 +160,7 @@ export const Home = () => {
   return (
     <div className="flex">
       <div className="flex-1">
-        <Components.InsectFrom handleUpdateFrom={handleUpdate} />
+        <Components.InsectFrom handleUpdate={handleUpdate} />
         <div className="overflow-hidden border border-gray-300 rounded-md shadow-md m-6">
           <Components.Dashboard
             shoppingData={shoppingData}

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { URL } from "../../config";
 import PropTypes from "prop-types";
 
-export const InsectFrom = ({ handleUpdateFrom }) => {
+export const InsectFrom = ({ handleUpdate }) => {
   const [concept, setConcept] = useState("");
   const [typeData, setTypeData] = useState([]);
   const [conceptData, setConceptData] = useState([]);
@@ -54,7 +54,7 @@ export const InsectFrom = ({ handleUpdateFrom }) => {
     setValue(rawValue);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
@@ -64,31 +64,27 @@ export const InsectFrom = ({ handleUpdateFrom }) => {
       value,
     };
 
-    fetch(`${URL}shopping`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Request server:", data);
-      })
-      .catch((error) => {
-        console.error("Fetch Error:", error);
+    try {
+      const response = await fetch(`${URL}shopping`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
 
-    setConcept("");
-    setDescription("");
-    setSelectedPaid("");
-    setValue("");
-    handleUpdateFrom();
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      setConcept("");
+      setDescription("");
+      setSelectedPaid("");
+      setValue("");
+      handleUpdate();
+    } catch (error) {
+      console.error("Fetch Error:", error);
+    }
   };
 
   return (
@@ -189,5 +185,5 @@ export const InsectFrom = ({ handleUpdateFrom }) => {
 };
 
 InsectFrom.propTypes = {
-  handleUpdateFrom: PropTypes.func,
+  handleUpdate: PropTypes.func,
 };

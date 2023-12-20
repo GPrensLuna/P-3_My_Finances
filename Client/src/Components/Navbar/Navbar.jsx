@@ -21,8 +21,8 @@ export const Navbar = () => {
           </NavBarLink>
         </li>
         <li className=" my-4 py-4 border-b border-slate.800 hover:bg-slate-800 hover:rounded">
-          <NavBarLink spy="true" smooth="true" className="" to="Table">
-            Table
+          <NavBarLink spy="true" smooth="true" className="" to="Dashboard">
+            Dashboard
           </NavBarLink>
         </li>
       </ul>

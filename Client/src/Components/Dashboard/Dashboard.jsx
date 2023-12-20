@@ -21,11 +21,7 @@ export const Dashboard = ({ shoppingData, handleUpdate }) => {
   return (
     <>
       <button onClick={handleUpdateDashboard}>Update</button>
-      <DataTable
-        data={shoppingData}
-        columns={columns}
-        handleUpdateDashboard={handleUpdateDashboard}
-      />
+      <DataTable data={shoppingData} columns={columns} />
     </>
   );
 };

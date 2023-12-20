@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<layouts.Home />}></Route>
         <Route path="/Insect" element={<layouts.InsectData />}></Route>
+        <Route path="/Dashboard" element={<layouts.Dashboard />}></Route>
       </Routes>
     </>
   );
