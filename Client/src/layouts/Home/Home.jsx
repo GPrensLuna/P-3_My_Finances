@@ -168,9 +168,9 @@ export const Home = () => {
   };
 
   return (
-    <div className="flex">
-      <div className="flex-1">
-        <Components.InsectFrom handleUpdate={handleUpdate} />
+    <div className="flex flex-col lg:flex-row">
+      <div className="flex-1 lg:w-full m-6">
+        <Components.InsectForm handleUpdate={handleUpdate} />
         <div className="overflow-hidden border border-gray-300 rounded-md shadow-md m-6">
           <Components.Dashboard
             shoppingData={shoppingData}
@@ -178,7 +178,7 @@ export const Home = () => {
           />
         </div>
       </div>
-      <div className="max-h-full overflow-y-auto">
+      <div className="lg:w-1/3 lg:max-h-full overflow-y-auto m-6">
         <Components.Reminder
           tasksData={tasksData}
           handleUpdateTasks={handleUpdateTasks}

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { URL } from "../../config";
 import PropTypes from "prop-types";
 
-export const InsectFrom = ({ handleUpdate }) => {
+export const InsectForm = ({ handleUpdate }) => {
   const [concept, setConcept] = useState("");
   const [typeData, setTypeData] = useState([]);
   const [conceptData, setConceptData] = useState([]);
@@ -192,6 +192,6 @@ export const InsectFrom = ({ handleUpdate }) => {
   );
 };
 
-InsectFrom.propTypes = {
+InsectForm.propTypes = {
   handleUpdate: PropTypes.func,
 };
