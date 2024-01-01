@@ -1,7 +1,6 @@
 import { URL } from "../../config";
 import { useState, useEffect } from "react";
 import * as Components from "../../Components";
-import PropTypes from "prop-types";
 
 export const Home = () => {
   const [tasksData, setTasksData] = useState([]);
@@ -27,9 +26,14 @@ export const Home = () => {
     fetch(`${URL}tasks`, {
       method: "GET",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
-        const formattedData = data.map(
+        const formattedData = data?.map(
           ({
             _id,
             concept,
@@ -53,7 +57,13 @@ export const Home = () => {
         setTasksData(formattedData);
       })
       .catch((error) => {
-        console.error("Error request GET:", error);
+        if (error.message.includes("NetworkError")) {
+          console.error(
+            "Network error. Please check your internet connection."
+          );
+        } else {
+          console.error("Error requesting GET:", error);
+        }
       });
   }, []);
 
@@ -63,7 +73,7 @@ export const Home = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        const formattedData = data.map(
+        const formattedData = data?.map(
           ({
             _id,
             concept,
@@ -97,7 +107,7 @@ export const Home = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        const formattedData = data.map(
+        const formattedData = data?.map(
           ({
             _id,
             concept,
@@ -138,7 +148,7 @@ export const Home = () => {
 
       const data = await response.json();
 
-      const formattedData = data.map(
+      const formattedData = data?.map(
         ({ _id, concept, type, description, value, createdAt, updatedAt }) => ({
           _id,
           concept,
@@ -176,9 +186,4 @@ export const Home = () => {
       </div>
     </div>
   );
-};
-
-Home.propTypes = {
-  shoppingData: PropTypes.func,
-  handleUpdate: PropTypes.func,
 };

@@ -17,12 +17,17 @@ export const InsectTasks = () => {
     fetch(`${URL}concept`, {
       method: "GET",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
         setConceptData(data);
       })
       .catch((error) => {
-        console.error("Error request GET:", error);
+        console.error("Error requesting GET:", error.message);
       });
   }, []);
 
@@ -30,12 +35,17 @@ export const InsectTasks = () => {
     fetch(`${URL}type`, {
       method: "GET",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
         setTypeData(data);
       })
       .catch((error) => {
-        console.error("Error request GET:", error);
+        console.error("Error requesting GET:", error.message);
       });
   }, []);
 
@@ -111,11 +121,15 @@ export const InsectTasks = () => {
             className="p-2 border border-gray-300 rounded-md w-full"
           >
             <option value="">...</option>
-            {conceptData.map((opConcept) => (
-              <option key={opConcept._id} value={opConcept.name}>
-                {opConcept.name}
-              </option>
-            ))}
+            {Array.isArray(conceptData) ? (
+              conceptData.map((opConcept) => (
+                <option key={opConcept._id} value={opConcept.name}>
+                  {opConcept.name}
+                </option>
+              ))
+            ) : (
+              <option value="">Error loading concepts</option>
+            )}
           </select>
         </label>
 
@@ -132,11 +146,15 @@ export const InsectTasks = () => {
             className="p-2 border border-gray-300 rounded-md w-full"
           >
             <option value="">...</option>
-            {typeData.map((opPaid) => (
-              <option key={opPaid._id} value={opPaid.name}>
-                {opPaid.name}
-              </option>
-            ))}
+            {Array.isArray(typeData) ? (
+              typeData?.map((opPaid) => (
+                <option key={opPaid._id} value={opPaid.name}>
+                  {opPaid.name}
+                </option>
+              ))
+            ) : (
+              <option value=""> Error loading concepts</option>
+            )}
           </select>
         </label>
 

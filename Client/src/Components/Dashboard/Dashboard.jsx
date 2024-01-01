@@ -27,6 +27,6 @@ export const Dashboard = ({ shoppingData, handleUpdate }) => {
 };
 
 Dashboard.propTypes = {
-  shoppingData: PropTypes.func,
+  shoppingData: PropTypes.array,
   handleUpdate: PropTypes.func,
 };

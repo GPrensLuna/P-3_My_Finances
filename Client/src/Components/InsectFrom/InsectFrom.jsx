@@ -109,11 +109,15 @@ export const InsectFrom = ({ handleUpdate }) => {
               className="p-2 border border-gray-300 rounded-md w-full"
             >
               <option value="">...</option>
-              {conceptData.map((opConcept) => (
-                <option key={opConcept._id} value={opConcept.name}>
-                  {opConcept.name}
-                </option>
-              ))}
+              {Array.isArray(conceptData) ? (
+                conceptData?.map((opConcept) => (
+                  <option key={opConcept._id} value={opConcept.name}>
+                    {opConcept.name}
+                  </option>
+                ))
+              ) : (
+                <option value=""> Error loading concepts</option>
+              )}
             </select>
           </div>
 
@@ -147,11 +151,15 @@ export const InsectFrom = ({ handleUpdate }) => {
               className="p-2 border border-gray-300 rounded-md w-full"
             >
               <option value="">...</option>
-              {typeData.map((opPaid) => (
-                <option key={opPaid._id} value={opPaid.name}>
-                  {opPaid.name}
-                </option>
-              ))}
+              {Array.isArray(typeData) ? (
+                typeData.map((opPaid) => (
+                  <option key={opPaid._id} value={opPaid.name}>
+                    {opPaid.name}
+                  </option>
+                ))
+              ) : (
+                <option value=""> Error loading concepts</option>
+              )}
             </select>
           </div>
 
