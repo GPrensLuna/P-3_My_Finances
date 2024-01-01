@@ -1,4 +1,4 @@
-export {postType} from './postType.js'
-export {postConcept} from './postConcept.js'
-export {postInsectTasks} from './postInsectTasks.js'
-export {postInsectShopping} from './postInsectShopping.js'
+export { postType } from "./postType.js";
+export { postConcept } from "./postConcept.js";
+export { postTasks } from "./postTasks.js";
+export { postShopping } from "./postShopping.js";

@@ -1,19 +1,19 @@
-import Shopping from '../../models/Shopping.js';
-import Concept from '../../models/Concept.js';
-import Type from '../../models/Type.js';
+import Shopping from "../../models/Shopping.js";
+import Concept from "../../models/Concept.js";
+import Type from "../../models/Type.js";
 
-export const postInsectShopping = async (req, res) => {
-  const { concept, type, description, value ,done ,deleted} = req.body;
+export const postShopping = async (req, res) => {
+  const { concept, type, description, value, done, deleted } = req.body;
 
   if (!concept || !type || !description || !value) {
-    return res.status(400).json({ error: 'All fields must be provided.' });
+    return res.status(400).json({ error: "All fields must be provided." });
   }
 
   const lowerCaseConcept = concept.toLowerCase();
   const lowerCaseType = type.toLowerCase();
 
   if (isNaN(value)) {
-    return res.status(400).json({ error: 'Value must be a numeric value.' });
+    return res.status(400).json({ error: "Value must be a numeric value." });
   }
 
   try {
@@ -42,7 +42,7 @@ export const postInsectShopping = async (req, res) => {
 
     res.json(savedShopping);
   } catch (error) {
-    console.error('Error saving to the database:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error saving to the database:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
