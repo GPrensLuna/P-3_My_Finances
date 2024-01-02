@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { URL } from "../../config";
+import { Successful } from "../ModalWindows/Successful";
 
 export const InsectConcept = () => {
-  const [selectedConcept, setSelectedConcept] = useState("");
   const [error, setError] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [selectedConcept, setSelectedConcept] = useState("");
 
   const handleValueConcept = (e) => {
     const inputValue = e.target.value.toLowerCase();
@@ -17,6 +20,10 @@ export const InsectConcept = () => {
     }
 
     setSelectedConcept(inputValue);
+  };
+
+  const toggleModal = () => {
+    setModalOpen(!modalOpen);
   };
 
   const handleSubmit = async (e) => {
@@ -43,10 +50,15 @@ export const InsectConcept = () => {
         const errorData = await response.json();
         throw new Error(errorData.error);
       }
+
       setSelectedConcept("");
+      setModalMessage("Saved successfully!");
+      toggleModal();
     } catch (error) {
       console.error("Error:", error.message);
       setError(error.message);
+      setModalMessage("Error: " + error.message);
+      toggleModal();
     }
   };
 
@@ -74,6 +86,12 @@ export const InsectConcept = () => {
           Save
         </button>
       </form>
+
+      <Successful
+        isOpen={modalOpen}
+        message={modalMessage}
+        onClose={toggleModal}
+      />
     </>
   );
 };

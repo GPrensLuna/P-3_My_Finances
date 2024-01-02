@@ -67,24 +67,26 @@ export const DataTable = ({ data, columns }) => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-base mx-auto p-3">
+      <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-base mx-auto">
         <thead className="ltr:text-left rtl:text-right">
           <tr>
             {columns.map((column) => (
               <th
                 key={column.key}
-                className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 cursor-pointer"
+                className="whitespace-nowrap py-2 font-medium text-gray-900 cursor-pointer"
                 onClick={() => handleSort(column.key)}
               >
-                {column.label}
-                <input
-                  className="ml-5"
-                  type="text"
-                  placeholder={`  Filter ${column.label}`}
-                  onChange={(e) =>
-                    handleFilterChange(column.key, e.target.value)
-                  }
-                />
+                <div className="flex flex-col px-8">
+                  {column.label}
+                  <input
+                    className=""
+                    type="text"
+                    placeholder={`  Filter ${column.label}`}
+                    onChange={(e) =>
+                      handleFilterChange(column.key, e.target.value)
+                    }
+                  />
+                </div>
               </th>
             ))}
           </tr>
@@ -95,7 +97,7 @@ export const DataTable = ({ data, columns }) => {
               {columns.map((column) => (
                 <td
                   key={column.key}
-                  className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center align-middle"
+                  className="whitespace-nowrap py-2 font-medium text-gray-900 text-center align-middle"
                 >
                   {item[column.key]}
                 </td>

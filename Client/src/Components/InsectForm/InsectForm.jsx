@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { URL } from "../../config";
 import PropTypes from "prop-types";
+import { Successful } from "../ModalWindows/Successful";
 
 export const InsectForm = ({ handleUpdate }) => {
   const [concept, setConcept] = useState("");
@@ -10,30 +11,32 @@ export const InsectForm = ({ handleUpdate }) => {
   const [selectedPaid, setSelectedPaid] = useState("");
   const [value, setValue] = useState("");
 
-  useEffect(() => {
-    fetch(`${URL}concept`, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setConceptData(data);
-      })
-      .catch((error) => {
-        console.error("Error request GET:", error);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
+  const fetchData = async (url, setData) => {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      console.error("Fetch Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(`${URL}concept`, setConceptData);
   }, []);
 
   useEffect(() => {
-    fetch(`${URL}type`, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setTypeData(data);
-      })
-      .catch((error) => {
-        console.error("Error request GET:", error);
-      });
+    fetchData(`${URL}type`, setTypeData);
   }, []);
 
   const handleConceptChange = (e) => {
@@ -52,6 +55,9 @@ export const InsectForm = ({ handleUpdate }) => {
     const rawValue = e.target.value;
 
     setValue(rawValue);
+  };
+  const toggleModal = () => {
+    setModalOpen(!modalOpen);
   };
 
   const handleSubmit = async (e) => {
@@ -82,8 +88,12 @@ export const InsectForm = ({ handleUpdate }) => {
       setSelectedPaid("");
       setValue("");
       handleUpdate();
+      setModalMessage("Saved successfully!");
+      toggleModal();
     } catch (error) {
       console.error("Fetch Error:", error);
+      setModalMessage("Error: " + error.message);
+      toggleModal();
     }
   };
 
@@ -188,6 +198,11 @@ export const InsectForm = ({ handleUpdate }) => {
           </div>
         </div>
       </form>
+      <Successful
+        isOpen={modalOpen}
+        message={modalMessage}
+        onClose={toggleModal}
+      />
     </>
   );
 };

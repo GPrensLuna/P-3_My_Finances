@@ -1,9 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { URL } from "../../config";
+import { Successful } from "../ModalWindows/Successful";
 
 export const InsectTasks = () => {
   const [conceptData, setConceptData] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   const [typeData, setTypeData] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
@@ -13,41 +16,34 @@ export const InsectTasks = () => {
     value: "",
   });
 
-  useEffect(() => {
-    fetch(`${URL}concept`, {
-      method: "GET",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setConceptData(data);
-      })
-      .catch((error) => {
-        console.error("Error requesting GET:", error.message);
+  const fetchData = async (url, setData) => {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      console.error("Fetch Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(`${URL}concept`, setConceptData);
   }, []);
 
   useEffect(() => {
-    fetch(`${URL}type`, {
-      method: "GET",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setTypeData(data);
-      })
-      .catch((error) => {
-        console.error("Error requesting GET:", error.message);
-      });
+    fetchData(`${URL}type`, setTypeData);
   }, []);
+
+  const toggleModal = () => {
+    setModalOpen(!modalOpen);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,11 +59,15 @@ export const InsectTasks = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      setModalMessage("Saved successfully!");
+      toggleModal();
 
       // const data = await response.json();
       // console.log("Request server:", data);
     } catch (error) {
       console.error("Fetch Error:", error.message);
+      setModalMessage("Error: " + error.message);
+      toggleModal();
     }
     setFormData({
       name: "",
@@ -195,6 +195,12 @@ export const InsectTasks = () => {
           Save
         </button>
       </form>
+
+      <Successful
+        isOpen={modalOpen}
+        message={modalMessage}
+        onClose={toggleModal}
+      />
     </>
   );
 };

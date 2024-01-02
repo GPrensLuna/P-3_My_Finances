@@ -168,17 +168,18 @@ export const Home = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row">
-      <div className="flex-1 lg:w-full m-6">
+    <div className="grid grid-cols-1 lg:grid-cols-5 w-full">
+      <div className="lg:col-span-4">
         <Components.InsectForm handleUpdate={handleUpdate} />
-        <div className="overflow-hidden border border-gray-300 rounded-md shadow-md m-6">
+        <div className="overflow-hidden m-3 rounded-md shadow-md">
           <Components.Dashboard
             shoppingData={shoppingData}
             handleUpdate={handleUpdate}
           />
         </div>
       </div>
-      <div className="lg:w-1/3 lg:max-h-full overflow-y-auto m-6">
+      <div className="lg:w-full h-full border-l-4 overflow-y-auto text-center">
+        <h1 className="text-2xl font-bold border-b-2">PENDING TASKS</h1>
         <Components.Reminder
           tasksData={tasksData}
           handleUpdateTasks={handleUpdateTasks}
