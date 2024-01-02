@@ -170,6 +170,9 @@ export const Home = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 w-full">
       <div className="lg:col-span-4">
+        <div className="flex justify-center text-[48px]">
+          <h1 className="justify-center">INSECT PAYMENTS MADE</h1>
+        </div>
         <Components.InsectForm handleUpdate={handleUpdate} />
         <div className="overflow-hidden m-3 rounded-md shadow-md">
           <Components.Dashboard
@@ -178,7 +181,7 @@ export const Home = () => {
           />
         </div>
       </div>
-      <div className="lg:w-full h-full border-l-4 overflow-y-auto text-center">
+      <div className="lg:w-full h-screen border-slate-800 border-l-2 p-4 overflow-y-auto text-center">
         <h1 className="text-2xl font-bold border-b-2">PENDING TASKS</h1>
         <Components.Reminder
           tasksData={tasksData}

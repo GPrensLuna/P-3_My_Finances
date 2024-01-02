@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { URL } from "../../config.js";
-import { Successful } from "../ModalWindows/Successful";
+import { Validation } from "../ModalWindows/Validation";
 
 export const CardsTasks = ({
   id,
@@ -19,14 +19,16 @@ export const CardsTasks = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
 
-  // const formatCurrency = (value) => {
-  //   return new Intl.NumberFormat("es-CO", {
-  //     style: "currency",
-  //     currency: "COP",
-  //   }).format(value);
-  // };
+  function currencyFormatter({ currency, value }) {
+    const formatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      minimumFractionDigits: 2,
+      currency,
+    });
+    return formatter.format(value);
+  }
 
   useEffect(() => {
     if (done && !doneAct) {
@@ -46,8 +48,14 @@ export const CardsTasks = ({
     setModalOpen(!modalOpen);
   };
 
+  const toggleConfirmationModal = () => {
+    setConfirmationModalOpen(!confirmationModalOpen);
+  };
+
   const handleConfirmClick = async () => {
     try {
+      toggleConfirmationModal(); // Cerrar la ventana modal de confirmación
+
       setLoading(true);
 
       const jsonData = {
@@ -76,15 +84,15 @@ export const CardsTasks = ({
         },
         body: JSON.stringify(updatedData),
       });
+
       if (!putResponse.ok) {
         throw new Error(`HTTP error! Status: ${putResponse.status}`);
       }
+
       onUpdateTasks();
-      setModalMessage("Saved successfully!");
       toggleModal();
     } catch (error) {
       setError(error.message);
-      setModalMessage("Error: " + error.message);
       toggleModal();
     } finally {
       setLoading(false);
@@ -93,6 +101,8 @@ export const CardsTasks = ({
 
   const handleDeleteClick = async () => {
     try {
+      toggleConfirmationModal(); // Cerrar la ventana modal de confirmación
+
       setLoading(true);
 
       const updatedData = {
@@ -106,9 +116,11 @@ export const CardsTasks = ({
         },
         body: JSON.stringify(updatedData),
       });
+
       if (!putResponse.ok) {
         throw new Error(`HTTP error! Status: ${putResponse.status}`);
       }
+
       onUpdateTasks();
     } catch (error) {
       setError(error.message);
@@ -121,17 +133,19 @@ export const CardsTasks = ({
     <>
       <section className={`m-2 justify-center ${doneAct ? "hidden" : ""}`}>
         <article
-          className={`flex flex-col bg-white w-full justify-center h-48 rounded-md py-3 px-6 border ${
+          className={`flex flex-col bg-white w-full h-48 rounded-md py-3 px-6 border ${
             doneAct ? "opacity-0" : ""
           }`}
         >
           <header className="text-center">
-            <h1 className="font-bold text-xl text-gray-800 pb-2">{value}</h1>
+            <h1 className="font-bold text-xl text-gray-800 pb-2">
+              {currencyFormatter({ currency: "CLP", value })}
+            </h1>
             <h2 className="text-base font-semibold text-gray-900">{name}</h2>
           </header>
           <p className="text-sm text-gray-500 pb-3">{description}</p>
-          <div className="flex gap-2 text-sm text-gray-500 border-b pb-2">
-            <span className="font-bold">Creation date:</span>
+          <div className="flex gap-2 text-sm justify-center text-gray-500 border-b pb-2">
+            <span className="font-bold">Fecha de creación:</span>
             <time>{createdAt}</time>
           </div>
           <div className="flex justify-center items-center gap-4 mt-auto">
@@ -147,10 +161,10 @@ export const CardsTasks = ({
               ></svg>
               <button
                 className="font-semibold text-sm text-green-500 px-5 py-1 rounded border border-green-500 hover:bg-green-700 hover:text-white"
-                onClick={handleConfirmClick}
+                onClick={toggleConfirmationModal}
                 disabled={loading}
               >
-                {loading ? "Process..." : "Set up"}
+                {loading ? "Procesando..." : "Configurar"}
               </button>
             </div>
             <div className="flex gap-1 text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
@@ -168,7 +182,7 @@ export const CardsTasks = ({
                 onClick={handleDeleteClick}
                 disabled={loading}
               >
-                {loading ? "Process..." : "Delete"}
+                {loading ? "Procesando..." : "Eliminar"}
               </button>
             </div>
           </div>
@@ -179,10 +193,11 @@ export const CardsTasks = ({
           )}
         </article>
       </section>
-      <Successful
-        isOpen={modalOpen}
-        message={modalMessage}
-        onClose={toggleModal}
+      <Validation
+        isOpen={confirmationModalOpen}
+        message="¿Estás seguro de completar esta tarea?"
+        onConfirm={handleConfirmClick}
+        onCancel={toggleConfirmationModal}
       />
     </>
   );

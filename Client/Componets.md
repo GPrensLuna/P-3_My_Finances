@@ -27,5 +27,5 @@ pm install --save aos@next
 name MongoDB
 
 git add .
-git commit -m "♻️ Actualizacino de componente"
+git commit -m "♻️ Actualizacino de ventanas modales"
 git push
