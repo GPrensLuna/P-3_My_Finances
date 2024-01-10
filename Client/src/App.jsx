@@ -4,7 +4,7 @@ import * as components from "./Components";
 
 function App() {
   return (
-    <div className="bg-slate-500 h-screen">
+    <div className="bg-slate-200 h-screen">
       <components.Navbar />
       <Routes>
         <Route path="/" element={<layouts.Home />}></Route>
