@@ -1,30 +1,20 @@
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
-
-const data = [
-  { name: "Enero", valor: Math.random() * 100 },
-  { name: "Febrero", valor: Math.random() * 100 },
-  { name: "Marzo", valor: Math.random() * 100 },
-  { name: "Abril", valor: Math.random() * 100 },
-  { name: "Mayo", valor: Math.random() * 100 },
-  { name: "Junio", valor: Math.random() * 100 },
-];
+// import * as Data from "../../Data";
+// import { URL } from "../../config.js";
 export const Dashboard = () => {
-  return (
-    <LineChart width={600} height={300} data={data}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Line type="monotone" dataKey="valor" stroke="#8884d8" />
-    </LineChart>
-  );
+  /*   const formatShoppingData = (data) => ({
+    ...data,
+    Value: Data.formatCurrency(data.value),
+    CreatedAt: Data.formatCreatedAt(data.createdAt),
+  });
+
+  const {
+    data: shoppingData,
+    loading: loadingShopping,
+    error: errorShopping,
+  } = Data.useFetchData(`${URL}shopping`, formatShoppingData);
+
+  if (loadingShopping) return <div>Loading...</div>;
+  if (errorShopping) return <div>Error: {errorShopping?.message}</div>; */
+
+  return <h1>hola</h1>;
 };
